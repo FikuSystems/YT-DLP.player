@@ -20,4 +20,9 @@ What i want it to do in the future
 - Normalised volume
 - Resume position
 - Warn on large downloads + custom threshold
-
+# Gallery
+![image](https://github.com/user-attachments/assets/fc88c1c1-7f74-4692-be1e-95a3c2df7f53)
+![image](https://github.com/user-attachments/assets/43890dce-6739-4b1b-953a-3ca7f7509616)
+![demo](https://github.com/user-attachments/assets/94985568-2de5-4077-8a71-b26e81f9c755)
+# Compatibility
+Anything that can run VLC and .NET core 9.0. Windows 10 1803+

@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="DeleteOnClose" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="DownloadLocation" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
@@ -18,19 +18,19 @@
       <Value Profile="(Default)">80</Value>
     </Setting>
     <Setting Name="DownloadVideoFormat" Type="System.String" Scope="User">
-      <Value Profile="(Default)">"bestvideo"</Value>
+      <Value Profile="(Default)">bestvideo</Value>
     </Setting>
     <Setting Name="DownloadAudioFormat" Type="System.String" Scope="User">
-      <Value Profile="(Default)">"bestaudio"</Value>
+      <Value Profile="(Default)">bestaudio</Value>
     </Setting>
     <Setting Name="PreferredLanguage" Type="System.String" Scope="User">
-      <Value Profile="(Default)">"en"</Value>
+      <Value Profile="(Default)">en</Value>
     </Setting>
     <Setting Name="NormalizeAudio" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="ResumeLastPosition" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="WarnLargeDownloads" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>

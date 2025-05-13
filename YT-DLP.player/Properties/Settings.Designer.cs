@@ -25,7 +25,7 @@ namespace YT_DLP.player.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool DeleteOnClose {
             get {
                 return ((bool)(this["DeleteOnClose"]));
@@ -85,7 +85,7 @@ namespace YT_DLP.player.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\"bestvideo\"")]
+        [global::System.Configuration.DefaultSettingValueAttribute("bestvideo")]
         public string DownloadVideoFormat {
             get {
                 return ((string)(this["DownloadVideoFormat"]));
@@ -97,7 +97,7 @@ namespace YT_DLP.player.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\"bestaudio\"")]
+        [global::System.Configuration.DefaultSettingValueAttribute("bestaudio")]
         public string DownloadAudioFormat {
             get {
                 return ((string)(this["DownloadAudioFormat"]));
@@ -109,7 +109,7 @@ namespace YT_DLP.player.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\"en\"")]
+        [global::System.Configuration.DefaultSettingValueAttribute("en")]
         public string PreferredLanguage {
             get {
                 return ((string)(this["PreferredLanguage"]));
@@ -133,7 +133,7 @@ namespace YT_DLP.player.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool ResumeLastPosition {
             get {
                 return ((bool)(this["ResumeLastPosition"]));

@@ -30,9 +30,10 @@
         {
             components = new System.ComponentModel.Container();
             TopPanel = new Panel();
+            DownloadQueue = new YT_DLP.player.controls.DLPButton();
+            FindVideoButton = new YT_DLP.player.controls.DLPButtonHighlighted();
             SettingsButton = new Button();
             panel2 = new Panel();
-            FindVideoButton = new YT_DLP.player.controls.DLPButtonHighlighted();
             URLTextBox = new TextBox();
             label1 = new Label();
             videoView1 = new LibVLCSharp.WinForms.VideoView();
@@ -66,6 +67,8 @@
             // 
             // TopPanel
             // 
+            TopPanel.Controls.Add(DownloadQueue);
+            TopPanel.Controls.Add(FindVideoButton);
             TopPanel.Controls.Add(SettingsButton);
             TopPanel.Controls.Add(panel2);
             TopPanel.Controls.Add(label1);
@@ -74,6 +77,43 @@
             TopPanel.Name = "TopPanel";
             TopPanel.Size = new Size(1068, 63);
             TopPanel.TabIndex = 1;
+            TopPanel.Paint += TopPanel_Paint;
+            // 
+            // DownloadQueue
+            // 
+            DownloadQueue.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            DownloadQueue.BackColor = Color.FromArgb(64, 64, 64);
+            DownloadQueue.FlatAppearance.BorderColor = SystemColors.WindowFrame;
+            DownloadQueue.FlatAppearance.MouseDownBackColor = Color.FromArgb(32, 32, 32);
+            DownloadQueue.FlatAppearance.MouseOverBackColor = Color.FromArgb(42, 42, 42);
+            DownloadQueue.FlatStyle = FlatStyle.Flat;
+            DownloadQueue.Font = new Font("Segoe UI", 9F);
+            DownloadQueue.ForeColor = Color.White;
+            DownloadQueue.Location = new Point(741, 15);
+            DownloadQueue.Name = "DownloadQueue";
+            DownloadQueue.Size = new Size(53, 32);
+            DownloadQueue.TabIndex = 5;
+            DownloadQueue.Text = "Queue";
+            DownloadQueue.UseVisualStyleBackColor = false;
+            DownloadQueue.Click += DownloadQueue_Click;
+            // 
+            // FindVideoButton
+            // 
+            FindVideoButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            FindVideoButton.BackColor = Color.FromArgb(240, 0, 54);
+            FindVideoButton.FlatAppearance.BorderColor = Color.FromArgb(250, 0, 60);
+            FindVideoButton.FlatAppearance.MouseDownBackColor = Color.FromArgb(115, 0, 26);
+            FindVideoButton.FlatAppearance.MouseOverBackColor = Color.FromArgb(160, 0, 40);
+            FindVideoButton.FlatStyle = FlatStyle.Flat;
+            FindVideoButton.Font = new Font("Segoe UI", 9F);
+            FindVideoButton.ForeColor = Color.White;
+            FindVideoButton.Location = new Point(699, 15);
+            FindVideoButton.Name = "FindVideoButton";
+            FindVideoButton.Size = new Size(41, 32);
+            FindVideoButton.TabIndex = 3;
+            FindVideoButton.Text = "Play";
+            FindVideoButton.UseVisualStyleBackColor = false;
+            FindVideoButton.Click += FindVideoButton_Click;
             // 
             // SettingsButton
             // 
@@ -95,31 +135,12 @@
             // 
             panel2.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             panel2.BorderStyle = BorderStyle.FixedSingle;
-            panel2.Controls.Add(FindVideoButton);
             panel2.Controls.Add(URLTextBox);
             panel2.Location = new Point(329, 15);
             panel2.Name = "panel2";
             panel2.Padding = new Padding(1);
-            panel2.Size = new Size(410, 32);
+            panel2.Size = new Size(369, 32);
             panel2.TabIndex = 2;
-            // 
-            // FindVideoButton
-            // 
-            FindVideoButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            FindVideoButton.BackColor = Color.FromArgb(240, 0, 54);
-            FindVideoButton.FlatAppearance.BorderColor = Color.FromArgb(250, 0, 60);
-            FindVideoButton.FlatAppearance.MouseDownBackColor = Color.FromArgb(115, 0, 26);
-            FindVideoButton.FlatAppearance.MouseOverBackColor = Color.FromArgb(160, 0, 40);
-            FindVideoButton.FlatStyle = FlatStyle.Flat;
-            FindVideoButton.Font = new Font("Segoe UI", 9F);
-            FindVideoButton.ForeColor = Color.White;
-            FindVideoButton.Location = new Point(367, 0);
-            FindVideoButton.Name = "FindVideoButton";
-            FindVideoButton.Size = new Size(41, 30);
-            FindVideoButton.TabIndex = 3;
-            FindVideoButton.Text = "Play";
-            FindVideoButton.UseVisualStyleBackColor = false;
-            FindVideoButton.Click += FindVideoButton_Click;
             // 
             // URLTextBox
             // 
@@ -130,7 +151,7 @@
             URLTextBox.ForeColor = Color.White;
             URLTextBox.Location = new Point(2, 5);
             URLTextBox.Name = "URLTextBox";
-            URLTextBox.Size = new Size(359, 20);
+            URLTextBox.Size = new Size(318, 20);
             URLTextBox.TabIndex = 1;
             URLTextBox.Text = "https://www.youtube.com/watch?v=Zgq3yZDhuxM";
             // 
@@ -228,7 +249,7 @@
             // 
             // TotalTimeLabel
             // 
-            TotalTimeLabel.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            TotalTimeLabel.Anchor = AnchorStyles.Right;
             TotalTimeLabel.AutoSize = true;
             TotalTimeLabel.Font = new Font("Consolas", 9F);
             TotalTimeLabel.Location = new Point(978, 5);
@@ -239,6 +260,7 @@
             // 
             // CurrentTimeLabel
             // 
+            CurrentTimeLabel.Anchor = AnchorStyles.Left;
             CurrentTimeLabel.AutoSize = true;
             CurrentTimeLabel.Font = new Font("Consolas", 9F);
             CurrentTimeLabel.Location = new Point(3, 5);
@@ -354,8 +376,8 @@
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleDimensions = new SizeF(96F, 96F);
+            AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.FromArgb(26, 26, 26);
             ClientSize = new Size(1068, 610);
             Controls.Add(BodyPanel);
@@ -409,5 +431,6 @@
         private Panel ControlPanel;
         private System.Windows.Forms.Timer FullScreenControlHide;
         private ToolTip toolTip1;
+        private controls.DLPButton DownloadQueue;
     }
 }

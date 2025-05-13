@@ -1,6 +1,5 @@
 using LibVLCSharp.Shared;
 using System.Runtime.InteropServices;
-using LibVLCSharp.Shared;
 using LibVLCSharp.WinForms;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -25,10 +24,16 @@ namespace YT_DLP.player
 
         public Form1()
         {
+            Properties.Settings.Default.Reload();
             InitializeComponent();
-            EnableDarkTitleBar(this.Handle);
+            EnableDarkTitleBar(Handle);
 
+            // Initialize non-nullable fields to avoid CS8618 warnings
+            _libVLC = new LibVLC();
+            _mediaPlayer = new MediaPlayer(_libVLC);
+            _emptyCursor = new Cursor("EmptyCursor.cur");
         }
+
         #region DarkTitleBar
         private static void EnableDarkTitleBar(IntPtr handle)
         {
@@ -45,12 +50,64 @@ namespace YT_DLP.player
         private static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, ref int attrValue, int attrSize);
         #endregion
 
+        #region Settings
+        private bool DeleteOnClose;
+        private bool AutoPlayAfterDownload;
+        private bool DownloadSubtitles;
+        private bool WarnLargeDownloads;
+        private bool NormalizeAudio;
+
+        private string? DownloadLocation;
+        private string? PreferredLanguage;
+        private string? DownloadVideoFormat;
+        private string? DownloadAudioFormat;
+
+        private int LargeDownloadsThreshold;
+        private int DefaultVolume;
+
+
+        private void GetSettings()
+        {
+            // Check Boxes
+            DeleteOnClose = Properties.Settings.Default.DeleteOnClose;
+            AutoPlayAfterDownload = Properties.Settings.Default.AutoPlayAfterDownload;
+            DownloadSubtitles = Properties.Settings.Default.DownloadSubtitles;
+            WarnLargeDownloads = Properties.Settings.Default.WarnLargeDownloads;
+            NormalizeAudio = Properties.Settings.Default.NormalizeAudio;
+            // Text Boxes
+            DownloadLocation = Properties.Settings.Default.DownloadLocation;
+            PreferredLanguage = Properties.Settings.Default.PreferredLanguage;
+            DownloadVideoFormat = Properties.Settings.Default.DownloadVideoFormat;
+            DownloadAudioFormat = Properties.Settings.Default.DownloadAudioFormat;
+            // Domain/ Numberic Up-Downs
+            LargeDownloadsThreshold = Properties.Settings.Default.LargeDownloadsThreshold;
+            DefaultVolume = Properties.Settings.Default.DefaultVolume;
+        }
+
+        private void ApplyBasicSettings()
+        {
+            // Delete on close done
+            // Autoplay after download done
+            // Default Volume done
+
+            // >> Download Subtitles <<
+            // >> Warn Large Downloads <<
+            // >> Normalize Audio <<
+            // >> Download Location <<
+            // >> Preferred Language <<
+            // >> Download Video Format <<
+            // >> Download Audio Format <<
+            // >> Large Downloads Threshold <<
+
+            VolumeTrackBar.Value = DefaultVolume;
+            VolumeLabel.Text = $"Volume {VolumeTrackBar.Value}%";
+        }
+        #endregion
 
         private async void Form1_Load(object sender, EventArgs e)
         {
-            this.KeyPreview = true;
+            KeyPreview = true;
 
-            GetVideos();
             //Form2 form2 = new();
             //form2.Show();
             _libVLC = new LibVLC();
@@ -63,6 +120,10 @@ namespace YT_DLP.player
             _emptyCursor = new Cursor("EmptyCursor.cur");
 
             await EnsureYTDLPAsync();
+
+            GetVideos();
+            GetSettings();
+            ApplyBasicSettings();
         }
 
         private void GetVideos()
@@ -213,14 +274,14 @@ namespace YT_DLP.player
             CurrentTimeLabel.Text = "--:--:--";
             TotalTimeLabel.Text = "--:--:--";
             PlayerControlsPanel.Enabled = false;
-            this.Text = "YT-DLP Player - Stopped";
+            Text = "YT-DLP Player - Stopped";
             VideoTitleLabel.Text = "Stopped - Enter a video URL in the URL bar.";
 
             if (IsFullscreen)
             {
-                this.FormBorderStyle = FormBorderStyle.Sizable;
-                this.WindowState = FormWindowState.Normal;
-                this.Size = PreviousSize;
+                FormBorderStyle = FormBorderStyle.Sizable;
+                WindowState = FormWindowState.Normal;
+                Size = PreviousSize;
                 IsFullscreen = false;
                 TopPanel.Show();
                 ControlPanel.Height = 215;
@@ -240,7 +301,7 @@ namespace YT_DLP.player
 
         private void MediaPlayer_LengthChanged(object? sender, MediaPlayerLengthChangedEventArgs e)
         {
-            this.Invoke(new Action(() =>
+            Invoke(new Action(() =>
             {
                 var totalSeconds = (int)(e.Length / 1000);
                 SeekTrackBar.Maximum = totalSeconds;
@@ -268,20 +329,20 @@ namespace YT_DLP.player
 
         private void MediaPlayer_EndReached(object? sender, EventArgs e)
         {
-            this.Invoke(new Action(() =>
+            Invoke(new Action(() =>
             {
                 PlayPauseButton.Text = "Play";
                 SeekTrackBar.Value = SeekTrackBar.Maximum;
                 CurrentTimeLabel.Text = "--:--:--";
                 TotalTimeLabel.Text = "--:--:--";
                 PlayerControlsPanel.Enabled = false;
-                this.Text = "YT-DLP Player - End Reached";
+                Text = "YT-DLP Player - End Reached";
 
                 if (IsFullscreen)
                 {
-                    this.FormBorderStyle = FormBorderStyle.Sizable;
-                    this.WindowState = FormWindowState.Normal;
-                    this.Size = PreviousSize;
+                    FormBorderStyle = FormBorderStyle.Sizable;
+                    WindowState = FormWindowState.Normal;
+                    Size = PreviousSize;
                     IsFullscreen = false;
                     TopPanel.Show();
                     ControlPanel.Height = 215;
@@ -312,21 +373,24 @@ namespace YT_DLP.player
                 // Wait a moment to ensure file handles are released
                 System.Threading.Thread.Sleep(300);
 
-                // Delete all media files in the Downloads folder
-                string exeDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!;
-                string downloadsDir = Path.Combine(exeDir, "Downloads");
-
-                if (Directory.Exists(downloadsDir))
+                if (DeleteOnClose)
                 {
-                    foreach (string file in Directory.GetFiles(downloadsDir))
+                    // Delete all media files in the Downloads folder
+                    string exeDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!;
+                    string downloadsDir = Path.Combine(exeDir, "Downloads");
+
+                    if (Directory.Exists(downloadsDir))
                     {
-                        try
+                        foreach (string file in Directory.GetFiles(downloadsDir))
                         {
-                            System.IO.File.Delete(file);
-                        }
-                        catch (Exception ex)
-                        {
-                            Debug.WriteLine($"Could not delete file {file}: {ex.Message}");
+                            try
+                            {
+                                System.IO.File.Delete(file);
+                            }
+                            catch (Exception ex)
+                            {
+                                Debug.WriteLine($"Could not delete file {file}: {ex.Message}");
+                            }
                         }
                     }
                 }
@@ -344,7 +408,7 @@ namespace YT_DLP.player
 
         private void MediaPlayer_TitleChanged(object? sender, MediaPlayerTitleChangedEventArgs e)
         {
-            this.Invoke(new Action(() =>
+            Invoke(new Action(() =>
             {
                 if (_mediaPlayer.Media?.Mrl != null)
                 {
@@ -352,12 +416,12 @@ namespace YT_DLP.player
                     var uri = new Uri(_mediaPlayer.Media.Mrl);
                     string fileName = Path.GetFileNameWithoutExtension(uri.LocalPath);
 
-                    this.Text = $"YT-DLP Player - {fileName}";
+                    Text = $"YT-DLP Player - {fileName}";
                     VideoTitleLabel.Text = fileName;
                 }
                 else
                 {
-                    this.Text = "YT-DLP Player";
+                    Text = "YT-DLP Player";
                     VideoTitleLabel.Text = "Unknown Title";
                 }
             }));
@@ -473,7 +537,7 @@ namespace YT_DLP.player
 
             downloadingdialog.Show();
             Application.DoEvents();
-            this.Enabled = false;
+            Enabled = false;
 
             using HttpClient client = new HttpClient();
 
@@ -514,14 +578,14 @@ namespace YT_DLP.player
             {
                 downloadingdialog.Close();
                 downloadingdialog.Dispose();
-                this.Enabled = true;
+                Enabled = true;
             }
         }
 
 
         private void ChangeArrow(PictureBox pictureBox, string resourceName)
         {
-            object resource = Properties.Resources.ResourceManager.GetObject(resourceName);
+            object? resource = Properties.Resources.ResourceManager.GetObject(resourceName);
             if (resource is byte[] imageBytes)
             {
                 using (MemoryStream ms = new MemoryStream(imageBytes))
@@ -551,7 +615,7 @@ namespace YT_DLP.player
         //    PlayPauseButton.Text = "Pause";
         //    PlayerControlsPanel.Enabled = true;
         //
-        //    this.Invoke(new Action(() =>
+        //    Invoke(new Action(() =>
         //    {
         //        if (_mediaPlayer.Media?.Mrl != null)
         //        {
@@ -559,12 +623,12 @@ namespace YT_DLP.player
         //            var uri = new Uri(_mediaPlayer.Media.Mrl);
         //            string fileName = Path.GetFileNameWithoutExtension(uri.LocalPath);
         //
-        //            this.Text = $"YT-DLP Player - {fileName}";
+        //            Text = $"YT-DLP Player - {fileName}";
         //            VideoTitleLabel.Text = fileName;
         //        }
         //        else
         //        {
-        //            this.Text = "YT-DLP Player";
+        //            Text = "YT-DLP Player";
         //            VideoTitleLabel.Text = "Unknown Title";
         //        }
         //    }));
@@ -572,7 +636,6 @@ namespace YT_DLP.player
 
         private async void FindVideoButton_Click(object sender, EventArgs e)
         {
-            GetVideos();
             string videoUrl = URLTextBox.Text.Trim();
             if (string.IsNullOrEmpty(videoUrl))
                 return;
@@ -581,24 +644,27 @@ namespace YT_DLP.player
             if (filePath == null)
                 return;
 
-            var media = new Media(_libVLC, filePath, FromType.FromPath);
-            _mediaPlayer.Play(media);
-
-            PlayPauseButton.Text = "Pause";
-            PlayerControlsPanel.Enabled = true;
-
-            this.Invoke(new Action(() =>
+            if (AutoPlayAfterDownload)
             {
-                string fileName = Path.GetFileNameWithoutExtension(filePath);
+                var media = new Media(_libVLC, filePath, FromType.FromPath);
+                _mediaPlayer.Play(media);
 
-                // Remove the (VIDEOURL) - part
-                int dashIndex = fileName.IndexOf(" - ");
-                if (dashIndex >= 0)
-                    fileName = fileName[(dashIndex + 3)..];
+                PlayPauseButton.Text = "Pause";
+                PlayerControlsPanel.Enabled = true;
 
-                this.Text = $"YT-DLP Player - {fileName}";
-                VideoTitleLabel.Text = fileName;
-            }));
+                Invoke(new Action(() =>
+                {
+                    string fileName = Path.GetFileNameWithoutExtension(filePath);
+
+                    // Remove the (VIDEOURL) - part
+                    int dashIndex = fileName.IndexOf(" - ");
+                    if (dashIndex >= 0)
+                        fileName = fileName[(dashIndex + 3)..];
+
+                    Text = $"YT-DLP Player - {fileName}";
+                    VideoTitleLabel.Text = fileName;
+                }));
+            }
             GetVideos();
         }
 
@@ -649,7 +715,7 @@ namespace YT_DLP.player
             }
 
             // Get the downloaded video file
-            string downloadedFile = Directory.GetFiles(downloadsDir, $"{sanitizedUrl} - *.mp4")
+            string? downloadedFile = Directory.GetFiles(downloadsDir, $"{sanitizedUrl} - *.mp4")
                                              .OrderByDescending(f => System.IO.File.GetLastWriteTime(f))
                                              .FirstOrDefault();
 
@@ -721,6 +787,8 @@ namespace YT_DLP.player
         {
             Settings settingsdialog = new();
             settingsdialog.ShowDialog();
+            GetSettings();
+            settingsdialog.Dispose();
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
@@ -759,7 +827,7 @@ namespace YT_DLP.player
             }
             else
             {
-                PreviousSize = this.Size;
+                PreviousSize = Size;
 
                 if (WindowState == FormWindowState.Maximized)
                     WindowState = FormWindowState.Normal;
@@ -901,6 +969,17 @@ namespace YT_DLP.player
                 SeekTrackBar.Hide();
                 ControlPanel.BackColor = Color.Black;
             }
+        }
+
+        private void DownloadQueue_Click(object sender, EventArgs e)
+        {
+            DownloadQueue downloadQueue = new();
+            downloadQueue.Show();
+        }
+
+        private void TopPanel_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

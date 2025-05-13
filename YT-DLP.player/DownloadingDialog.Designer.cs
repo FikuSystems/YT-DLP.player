@@ -42,6 +42,7 @@
             // 
             // progressBar1
             // 
+            progressBar1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             progressBar1.Location = new Point(12, 42);
             progressBar1.Name = "progressBar1";
             progressBar1.Size = new Size(403, 10);
@@ -60,6 +61,7 @@
             // 
             // groupBox1
             // 
+            groupBox1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             groupBox1.Controls.Add(pictureBox2);
             groupBox1.Controls.Add(pictureBox1);
             groupBox1.Controls.Add(label3);
@@ -108,8 +110,8 @@
             // 
             // DownloadingDialog
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleDimensions = new SizeF(96F, 96F);
+            AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.FromArgb(26, 26, 26);
             ClientSize = new Size(427, 138);
             ControlBox = false;

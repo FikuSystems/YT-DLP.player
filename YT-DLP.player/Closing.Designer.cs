@@ -44,6 +44,7 @@
             // 
             // progressBar1
             // 
+            progressBar1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             progressBar1.Location = new Point(12, 42);
             progressBar1.Name = "progressBar1";
             progressBar1.Size = new Size(403, 10);
@@ -52,8 +53,8 @@
             // 
             // Closing
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleDimensions = new SizeF(96F, 96F);
+            AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.FromArgb(26, 26, 26);
             ClientSize = new Size(427, 65);
             ControlBox = false;

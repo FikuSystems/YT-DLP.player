@@ -63,96 +63,6 @@ namespace YT_DLP.player.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] cannotplayvideo {
-            get {
-                object obj = ResourceManager.GetObject("cannotplayvideo", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] connectionfailed {
-            get {
-                object obj = ResourceManager.GetObject("connectionfailed", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] downloading {
-            get {
-                object obj = ResourceManager.GetObject("downloading", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] ffmpegnotfound {
-            get {
-                object obj = ResourceManager.GetObject("ffmpegnotfound", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] loading {
-            get {
-                object obj = ResourceManager.GetObject("loading", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap MSC_pic3 {
-            get {
-                object obj = ResourceManager.GetObject("MSC_pic3", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap no_thumb {
-            get {
-                object obj = ResourceManager.GetObject("no thumb", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] ready {
-            get {
-                object obj = ResourceManager.GetObject("ready", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] requesting {
-            get {
-                object obj = ResourceManager.GetObject("requesting", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
         internal static byte[] RightArrowShort_Blue {
             get {
                 object obj = ResourceManager.GetObject("RightArrowShort_Blue", resourceCulture);
@@ -186,26 +96,6 @@ namespace YT_DLP.player.Properties {
         internal static byte[] RightArrowShort_Orange {
             get {
                 object obj = ResourceManager.GetObject("RightArrowShort_Orange", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] videonotfound {
-            get {
-                object obj = ResourceManager.GetObject("videonotfound", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] ytdlpnotfound {
-            get {
-                object obj = ResourceManager.GetObject("ytdlpnotfound", resourceCulture);
                 return ((byte[])(obj));
             }
         }

@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace YT_DLP.player
 {
-    public partial class DownloadQueue : Form
+    public partial class frm_DownloadQueue : Form
     {
-        public DownloadQueue()
+        public frm_DownloadQueue()
         {
             InitializeComponent();
         }

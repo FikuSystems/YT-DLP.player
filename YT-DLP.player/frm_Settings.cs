@@ -11,9 +11,9 @@ using System.Windows.Forms;
 
 namespace YT_DLP.player
 {
-    public partial class Settings : Form
+    public partial class frm_Settings : Form
     {
-        public Settings()
+        public frm_Settings()
         {
             EnableDarkTitleBar(this.Handle);
             InitializeComponent();

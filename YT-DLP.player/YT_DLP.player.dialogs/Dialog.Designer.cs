@@ -31,7 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Dialog));
             panel1 = new Panel();
             label1 = new Label();
-            dlpButtonHighlighted1 = new YT_DLP.player.controls.DLPButtonHighlighted();
+            dlpButtonHighlighted1 = new controls.DLPButtonHighlighted();
             panel1.SuspendLayout();
             SuspendLayout();
             // 

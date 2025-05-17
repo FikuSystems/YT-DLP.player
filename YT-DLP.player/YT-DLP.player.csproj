@@ -7,6 +7,7 @@
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
 	  <ForceDesignerDPIUnaware>true</ForceDesignerDPIUnaware>
+	  <UseWPF>False</UseWPF>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="EmptyCursor.cur" />
@@ -34,17 +35,29 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Update="YT_DLP.player.statusImages\res_StatusImages.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>res_StatusImages.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="YT_DLP.player.statusImages\res_StatusImages.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>res_StatusImages.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Update="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Update="YT_DLP.player.statusImages\cannotplayvideo.PNG">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 </Project>

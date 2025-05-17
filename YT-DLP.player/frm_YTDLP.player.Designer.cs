@@ -1,4 +1,6 @@
-﻿namespace YT_DLP.player
+﻿using YT_DLP.player.controls;
+
+namespace YT_DLP.player
 {
     partial class Form1
     {
@@ -30,8 +32,8 @@
         {
             components = new System.ComponentModel.Container();
             TopPanel = new Panel();
-            DownloadQueue = new YT_DLP.player.controls.DLPButton();
-            FindVideoButton = new YT_DLP.player.controls.DLPButtonHighlighted();
+            DownloadQueue = new DLPButton();
+            FindVideoButton = new DLPButtonHighlighted();
             SettingsButton = new Button();
             panel2 = new Panel();
             URLTextBox = new TextBox();
@@ -46,14 +48,16 @@
             TotalTimeLabel = new Label();
             CurrentTimeLabel = new Label();
             SeekTrackBar = new TrackBar();
-            StopPlayBackButton = new YT_DLP.player.controls.DLPButton();
-            PlayPauseButton = new YT_DLP.player.controls.DLPButtonHighlighted();
-            dlpButton2 = new YT_DLP.player.controls.DLPButton();
+            StopPlayBackButton = new DLPButton();
+            PlayPauseButton = new DLPButtonHighlighted();
+            dlpButton2 = new DLPButton();
             VideoTitleLabel = new Label();
             TimeTrackTimer = new System.Windows.Forms.Timer(components);
             ControlPanel = new Panel();
+            dlpButton1 = new DLPButton();
             FullScreenControlHide = new System.Windows.Forms.Timer(components);
             toolTip1 = new ToolTip(components);
+            button1 = new Button();
             TopPanel.SuspendLayout();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)videoView1).BeginInit();
@@ -352,6 +356,8 @@
             // 
             // ControlPanel
             // 
+            ControlPanel.Controls.Add(button1);
+            ControlPanel.Controls.Add(dlpButton1);
             ControlPanel.Controls.Add(dlpButton2);
             ControlPanel.Controls.Add(PlayerControlsPanel);
             ControlPanel.Controls.Add(RecentVideosFlow);
@@ -363,6 +369,19 @@
             ControlPanel.TabIndex = 7;
             ControlPanel.Paint += panel1_Paint;
             // 
+            // dlpButton1
+            // 
+            dlpButton1.BackColor = Color.FromArgb(64, 64, 64);
+            dlpButton1.FlatStyle = FlatStyle.System;
+            dlpButton1.Font = new Font("Segoe UI", 9F);
+            dlpButton1.ForeColor = Color.White;
+            dlpButton1.Location = new Point(522, 75);
+            dlpButton1.Name = "dlpButton1";
+            dlpButton1.Size = new Size(75, 23);
+            dlpButton1.TabIndex = 9;
+            dlpButton1.Text = "dlpButton1";
+            dlpButton1.UseVisualStyleBackColor = true;
+            // 
             // FullScreenControlHide
             // 
             FullScreenControlHide.Interval = 3000;
@@ -373,6 +392,16 @@
             toolTip1.IsBalloon = true;
             toolTip1.ToolTipIcon = ToolTipIcon.Info;
             toolTip1.ToolTipTitle = "Guide";
+            // 
+            // button1
+            // 
+            button1.ForeColor = Color.White;
+            button1.Location = new Point(622, 75);
+            button1.Name = "button1";
+            button1.Size = new Size(75, 23);
+            button1.TabIndex = 10;
+            button1.Text = "button1";
+            button1.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -432,5 +461,7 @@
         private System.Windows.Forms.Timer FullScreenControlHide;
         private ToolTip toolTip1;
         private controls.DLPButton DownloadQueue;
+        private controls.DLPButton dlpButton1;
+        private Button button1;
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace YT_DLP.player
 {
-    partial class Settings
+    partial class frm_Settings
     {
         /// <summary>
         /// Required designer variable.
@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             FormTitleLabel = new Label();
-            SaveButton = new YT_DLP.player.controls.DLPButtonHighlighted();
-            DiscardButton = new YT_DLP.player.controls.DLPButton();
+            SaveButton = new controls.DLPButtonHighlighted();
+            DiscardButton = new controls.DLPButton();
             groupBox2 = new GroupBox();
             DefualtVolumeNUD = new NumericUpDown();
             label8 = new Label();
@@ -51,12 +51,15 @@
             DownloadLocationLabel = new Label();
             DownloadLocationTB = new TextBox();
             DeleteOnCloseCB = new CheckBox();
-            ResetButton = new YT_DLP.player.controls.DLPButton();
+            ResetButton = new controls.DLPButton();
             label1 = new Label();
+            comboBox1 = new ComboBox();
+            groupBox1 = new GroupBox();
             groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)DefualtVolumeNUD).BeginInit();
             DownloadBehaviourPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)LargeDownloadThresholdNUD).BeginInit();
+            groupBox1.SuspendLayout();
             SuspendLayout();
             // 
             // FormTitleLabel
@@ -210,7 +213,7 @@
             DownloadBehaviourPanel.ForeColor = Color.FromArgb(255, 255, 254);
             DownloadBehaviourPanel.Location = new Point(12, 42);
             DownloadBehaviourPanel.Name = "DownloadBehaviourPanel";
-            DownloadBehaviourPanel.Size = new Size(205, 269);
+            DownloadBehaviourPanel.Size = new Size(205, 205);
             DownloadBehaviourPanel.TabIndex = 4;
             DownloadBehaviourPanel.TabStop = false;
             DownloadBehaviourPanel.Text = "Download Behaviour";
@@ -247,7 +250,7 @@
             // 
             // PreferredLanguageTB
             // 
-            PreferredLanguageTB.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            PreferredLanguageTB.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             PreferredLanguageTB.BackColor = Color.FromArgb(26, 26, 26);
             PreferredLanguageTB.BorderStyle = BorderStyle.FixedSingle;
             PreferredLanguageTB.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -311,7 +314,7 @@
             // 
             // DownloadLocationTB
             // 
-            DownloadLocationTB.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            DownloadLocationTB.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             DownloadLocationTB.BackColor = Color.FromArgb(26, 26, 26);
             DownloadLocationTB.BorderStyle = BorderStyle.FixedSingle;
             DownloadLocationTB.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -361,6 +364,26 @@
             label1.Text = "Most of the settings are still being implemented";
             label1.Click += label1_Click;
             // 
+            // comboBox1
+            // 
+            comboBox1.FormattingEnabled = true;
+            comboBox1.Items.AddRange(new object[] { "Dark", "Light" });
+            comboBox1.Location = new Point(6, 22);
+            comboBox1.Name = "comboBox1";
+            comboBox1.Size = new Size(193, 23);
+            comboBox1.TabIndex = 21;
+            // 
+            // groupBox1
+            // 
+            groupBox1.Controls.Add(comboBox1);
+            groupBox1.ForeColor = Color.FromArgb(255, 255, 254);
+            groupBox1.Location = new Point(12, 253);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new Size(205, 58);
+            groupBox1.TabIndex = 22;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "Theme";
+            // 
             // Settings
             // 
             AcceptButton = SaveButton;
@@ -370,6 +393,7 @@
             CancelButton = DiscardButton;
             ClientSize = new Size(440, 368);
             ControlBox = false;
+            Controls.Add(groupBox1);
             Controls.Add(label1);
             Controls.Add(ResetButton);
             Controls.Add(DownloadBehaviourPanel);
@@ -387,6 +411,7 @@
             DownloadBehaviourPanel.ResumeLayout(false);
             DownloadBehaviourPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)LargeDownloadThresholdNUD).EndInit();
+            groupBox1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -418,5 +443,7 @@
         private NumericUpDown DefualtVolumeNUD;
         private NumericUpDown LargeDownloadThresholdNUD;
         private Label label1;
+        private ComboBox comboBox1;
+        private GroupBox groupBox1;
     }
 }

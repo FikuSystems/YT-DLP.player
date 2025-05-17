@@ -32,7 +32,7 @@
             VideoTitleLabel = new Label();
             VideoURLLabel = new Label();
             TimeLabel = new Label();
-            WatchNowButton = new YT_DLP.player.controls.DLPButtonHighlighted();
+            WatchNowButton = new controls.DLPButtonHighlighted();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 

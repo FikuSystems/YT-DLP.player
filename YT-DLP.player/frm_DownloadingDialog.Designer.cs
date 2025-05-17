@@ -1,6 +1,6 @@
 ﻿namespace YT_DLP.player
 {
-    partial class DownloadingDialog
+    partial class frm_DownloadingDialog
     {
         /// <summary>
         /// Required designer variable.
@@ -44,6 +44,8 @@
             // 
             progressBar1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             progressBar1.Location = new Point(12, 42);
+            progressBar1.MaximumSize = new Size(403, 10);
+            progressBar1.MinimumSize = new Size(403, 10);
             progressBar1.Name = "progressBar1";
             progressBar1.Size = new Size(403, 10);
             progressBar1.Style = ProgressBarStyle.Marquee;
@@ -68,8 +70,10 @@
             groupBox1.Controls.Add(label2);
             groupBox1.ForeColor = Color.White;
             groupBox1.Location = new Point(12, 58);
+            groupBox1.MaximumSize = new Size(403, 68);
+            groupBox1.MinimumSize = new Size(403, 68);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(403, 67);
+            groupBox1.Size = new Size(403, 68);
             groupBox1.TabIndex = 4;
             groupBox1.TabStop = false;
             groupBox1.Text = "Tasks";
@@ -108,7 +112,7 @@
             label2.TabIndex = 0;
             label2.Text = "YT-DLP.exe";
             // 
-            // DownloadingDialog
+            // frm_DownloadingDialog
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
             AutoScaleMode = AutoScaleMode.Dpi;
@@ -120,10 +124,13 @@
             Controls.Add(label1);
             ForeColor = Color.FromArgb(255, 255, 254);
             FormBorderStyle = FormBorderStyle.FixedDialog;
-            Name = "DownloadingDialog";
+            MaximumSize = new Size(443, 177);
+            MinimumSize = new Size(443, 177);
+            Name = "frm_DownloadingDialog";
             StartPosition = FormStartPosition.CenterParent;
             Text = "YT-DLP Player - Downloading files...";
             TopMost = true;
+            FormClosing += frm_DownloadingDialog_FormClosing;
             Load += DownloadingDialog_Load;
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();

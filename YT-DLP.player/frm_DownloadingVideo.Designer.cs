@@ -1,6 +1,6 @@
 ﻿namespace YT_DLP.player
 {
-    partial class Closing
+    partial class frm_DownloadingVideo
     {
         /// <summary>
         /// Required designer variable.
@@ -28,19 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            label1 = new Label();
             progressBar1 = new ProgressBar();
+            label1 = new Label();
             SuspendLayout();
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI Semibold", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(12, 9);
-            label1.Name = "label1";
-            label1.Size = new Size(141, 30);
-            label1.TabIndex = 0;
-            label1.Text = "Cleaning up...";
             // 
             // progressBar1
             // 
@@ -49,29 +39,40 @@
             progressBar1.Name = "progressBar1";
             progressBar1.Size = new Size(403, 10);
             progressBar1.Style = ProgressBarStyle.Marquee;
-            progressBar1.TabIndex = 1;
+            progressBar1.TabIndex = 5;
             // 
-            // Closing
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI Semibold", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.Location = new Point(12, 9);
+            label1.Name = "label1";
+            label1.Size = new Size(202, 30);
+            label1.TabIndex = 4;
+            label1.Text = "Downloading Video";
+            // 
+            // DownloadingVideo
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
             AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.FromArgb(26, 26, 26);
-            ClientSize = new Size(427, 65);
+            ClientSize = new Size(427, 69);
             ControlBox = false;
             Controls.Add(progressBar1);
             Controls.Add(label1);
             ForeColor = Color.White;
             FormBorderStyle = FormBorderStyle.FixedDialog;
-            Name = "Closing";
+            Name = "DownloadingVideo";
             StartPosition = FormStartPosition.CenterParent;
-            Text = "YT-DLP Player - Closing";
-            Load += Closing_Load;
+            Text = "YT-DLP Player - Downloading %video%";
+            TopMost = true;
+            Load += DownloadingVideo_Load;
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
-        private ProgressBar progressBar1;
         public Label label1;
+        public ProgressBar progressBar1;
     }
 }

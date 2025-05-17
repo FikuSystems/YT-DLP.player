@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace YT_DLP.player
 {
-    public partial class Form2 : Form
+    public partial class frm_Splash : Form
     {
-        public Form2()
+        public frm_Splash()
         {
             InitializeComponent();
         }

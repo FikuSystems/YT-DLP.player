@@ -11,9 +11,9 @@ using System.Windows.Forms;
 
 namespace YT_DLP.player
 {
-    public partial class DownloadingVideo : Form
+    public partial class frm_DownloadingVideo : Form
     {
-        public DownloadingVideo()
+        public frm_DownloadingVideo()
         {
             InitializeComponent();
             EnableDarkTitleBar(this.Handle);

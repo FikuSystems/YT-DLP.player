@@ -9,6 +9,8 @@ using System.IO.Compression;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Runtime.CompilerServices;
+using System.IO;
+using System.Net.Http;
 
 namespace YT_DLP.player
 {
@@ -154,7 +156,7 @@ namespace YT_DLP.player
                 url = CleanUrl(url);
 
                 // Create the control
-                var videoControl = new YT_DLP.player.DownloadedVideos
+                var videoControl = new DownloadedVideos
                 {
                     VideoTitleLabel = { Text = videoTitle },
                     VideoURLLabel = { Text = url }
@@ -353,7 +355,7 @@ namespace YT_DLP.player
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             // Show optional closing dialog
-            Closing closing = new Closing();
+            frm_Closing closing = new frm_Closing();
             closing.Show();
             closing.BringToFront();
             closing.Focus();
@@ -531,7 +533,7 @@ namespace YT_DLP.player
             string ytDlpPath = Path.Combine(exeDir, "yt-dlp.exe");
             string ffmpegPath = Path.Combine(exeDir, "ffmpeg.exe");
 
-            DownloadingDialog downloadingdialog = new();
+            frm_DownloadingDialog downloadingdialog = new();
             ChangeArrow(downloadingdialog.pictureBox1, "RightArrowShort_Grey");
             ChangeArrow(downloadingdialog.pictureBox2, "RightArrowShort_Grey");
 
@@ -680,7 +682,7 @@ namespace YT_DLP.player
 
             string ytDlpPath = Path.Combine(exeDir, "yt-dlp.exe");
 
-            DownloadingVideo downloadingDialog = new DownloadingVideo();
+            frm_DownloadingVideo downloadingDialog = new frm_DownloadingVideo();
             downloadingDialog.Text = "YT-DLP Player - Downloading...";
             downloadingDialog.Show(this);
 
@@ -754,7 +756,7 @@ namespace YT_DLP.player
             return match.Success ? match.Groups[1].Value : string.Empty;
         }
 
-        private void ParseProgress(string? line, DownloadingVideo dialog)
+        private void ParseProgress(string? line, frm_DownloadingVideo dialog)
         {
             if (string.IsNullOrWhiteSpace(line)) return;
 
@@ -785,7 +787,7 @@ namespace YT_DLP.player
 
         private void SettingsButton_Click(object sender, EventArgs e)
         {
-            Settings settingsdialog = new();
+            frm_Settings settingsdialog = new();
             settingsdialog.ShowDialog();
             GetSettings();
             settingsdialog.Dispose();
@@ -973,7 +975,7 @@ namespace YT_DLP.player
 
         private void DownloadQueue_Click(object sender, EventArgs e)
         {
-            DownloadQueue downloadQueue = new();
+            frm_DownloadQueue downloadQueue = new();
             downloadQueue.Show();
         }
 

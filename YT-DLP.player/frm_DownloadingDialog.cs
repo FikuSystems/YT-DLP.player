@@ -11,9 +11,9 @@ using System.Windows.Forms;
 
 namespace YT_DLP.player
 {
-    public partial class Closing : Form
+    public partial class frm_DownloadingDialog : Form
     {
-        public Closing()
+        public frm_DownloadingDialog()
         {
             InitializeComponent();
             EnableDarkTitleBar(this.Handle);
@@ -33,9 +33,19 @@ namespace YT_DLP.player
         [DllImport("dwmapi.dll")]
         private static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, ref int attrValue, int attrSize);
         #endregion
-        private void Closing_Load(object sender, EventArgs e)
+
+        private void DownloadingDialog_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void frm_DownloadingDialog_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
+        }
+        private void FadeTimer_Tick(object sender, EventArgs e)
+        {
+            
         }
     }
 }

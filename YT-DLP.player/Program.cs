@@ -8,11 +8,16 @@ namespace YT_DLP.player
         [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             Application.SetColorMode(SystemColorMode.Dark);
-            Application.Run(new Form1());
+            using (var splash = new frm_Splash())
+            {
+                splash.Show();
+                Application.DoEvents();
+                Thread.Sleep(1000); // Additional time so winforms doesnt poo itself
+                splash.Close();
+                Application.Run(new Form1());
+            }
         }
     }
 }

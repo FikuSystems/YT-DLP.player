@@ -33,7 +33,7 @@ namespace YT_DLP.player.controls
             {
                 this.FlatStyle = FlatStyle.Flat;
                 this.BackColor = Color.FromArgb(64, 64, 64);
-                this.FlatAppearance.BorderColor = SystemColors.WindowFrame;
+                this.FlatAppearance.BorderColor = Color.FromArgb(100,100,100);
                 this.FlatAppearance.MouseDownBackColor = Color.FromArgb(32, 32, 32);
                 this.FlatAppearance.MouseOverBackColor = Color.FromArgb(42, 42, 42);
                 this.ForeColor = Color.White;

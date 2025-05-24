@@ -1,4 +1,6 @@
-﻿namespace YT_DLP.player.dialogs
+﻿using YT_DLP.player.controls;
+
+namespace YT_DLP.player.dialogs
 {
     partial class Dialog
     {
@@ -31,7 +33,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Dialog));
             panel1 = new Panel();
             label1 = new Label();
-            dlpButtonHighlighted1 = new controls.DLPButtonHighlighted();
+            dlpButtonHighlighted1 = new DLPButtonHighlighted();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -43,7 +45,7 @@
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(410, 33);
+            panel1.Size = new Size(850, 33);
             panel1.TabIndex = 0;
             // 
             // label1
@@ -66,7 +68,7 @@
             dlpButtonHighlighted1.Font = new Font("Segoe UI", 9F);
             dlpButtonHighlighted1.ForeColor = Color.White;
             dlpButtonHighlighted1.Image = (Image)resources.GetObject("dlpButtonHighlighted1.Image");
-            dlpButtonHighlighted1.Location = new Point(381, 3);
+            dlpButtonHighlighted1.Location = new Point(821, 3);
             dlpButtonHighlighted1.Name = "dlpButtonHighlighted1";
             dlpButtonHighlighted1.Size = new Size(26, 26);
             dlpButtonHighlighted1.TabIndex = 1;
@@ -78,7 +80,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(26, 26, 26);
-            ClientSize = new Size(410, 187);
+            ClientSize = new Size(850, 269);
             Controls.Add(panel1);
             ForeColor = Color.White;
             FormBorderStyle = FormBorderStyle.None;

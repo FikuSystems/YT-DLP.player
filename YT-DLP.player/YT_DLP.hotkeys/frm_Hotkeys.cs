@@ -7,19 +7,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using YT_DLP.player.hotkeys;
 
 namespace YT_DLP.player
 {
-    public partial class frm_Splash : Form
+    public partial class frm_Hotkeys : Form
     {
-        public frm_Splash()
+        public frm_Hotkeys()
         {
             InitializeComponent();
         }
-
-        private void frm_Splash_Load(object sender, EventArgs e)
+        private void LoadHotkeys()
         {
-            label1.Text = $"YT_DLP.Player loading...\r\nVersion: {Application.ProductVersion}";
+            // Load Hotkeys from settings
+            //HotKeys.Default.K1 
         }
     }
 }

@@ -95,7 +95,7 @@
             panel1.Size = new Size(444, 137);
             panel1.TabIndex = 2;
             // 
-            // DownloadQueue
+            // frm_DownloadQueue
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -103,7 +103,7 @@
             Controls.Add(panel1);
             Controls.Add(dlpButton1);
             Controls.Add(dataGridView1);
-            Name = "DownloadQueue";
+            Name = "frm_DownloadQueue";
             Text = "YT-DLP Player - Download Queue";
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);

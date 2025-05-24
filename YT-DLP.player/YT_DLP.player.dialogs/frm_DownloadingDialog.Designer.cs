@@ -43,6 +43,7 @@
             // progressBar1
             // 
             progressBar1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            progressBar1.ForeColor = Color.FromArgb(240, 0, 54);
             progressBar1.Location = new Point(12, 42);
             progressBar1.MaximumSize = new Size(403, 10);
             progressBar1.MinimumSize = new Size(403, 10);

@@ -1,0 +1,156 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="YT_DLP.player.YT_DLP.hotkeys" GeneratedClassName="HotKeys">
+  <Profiles />
+  <Settings>
+    <Setting Name="K1" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Skip player to 10%</Value>
+    </Setting>
+    <Setting Name="K2" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Skip player to 20%</Value>
+    </Setting>
+    <Setting Name="K3" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Skip player to 30%</Value>
+    </Setting>
+    <Setting Name="K4" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Skip player to 40%</Value>
+    </Setting>
+    <Setting Name="K5" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Skip player to 50%</Value>
+    </Setting>
+    <Setting Name="K6" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Skip player to 60%</Value>
+    </Setting>
+    <Setting Name="K7" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Skip player to 70%</Value>
+    </Setting>
+    <Setting Name="K8" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Skip player to 80%</Value>
+    </Setting>
+    <Setting Name="K9" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Skip player to 90%</Value>
+    </Setting>
+    <Setting Name="K0" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Seek to begining</Value>
+    </Setting>
+    <Setting Name="Q" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="W" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="E" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="R" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="T" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Y" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="U" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="I" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Open popup player</Value>
+    </Setting>
+    <Setting Name="O" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="P" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="A" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="S" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="D" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="F" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Activate/exit fullscreen</Value>
+    </Setting>
+    <Setting Name="G" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="H" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="J" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Seek back 10 seconds</Value>
+    </Setting>
+    <Setting Name="K" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Play/pause player</Value>
+    </Setting>
+    <Setting Name="L" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Seek forward 10 seconds</Value>
+    </Setting>
+    <Setting Name="Z" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="X" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="C" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Show/hide closed captions</Value>
+    </Setting>
+    <Setting Name="V" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="B" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="N" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="M" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Mute/unmute player</Value>
+    </Setting>
+    <Setting Name="Comma" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Go back previous frame</Value>
+    </Setting>
+    <Setting Name="Period" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Skip to next frame</Value>
+    </Setting>
+    <Setting Name="ForwardSlash" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Go to URL box</Value>
+    </Setting>
+    <Setting Name="Insert" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Delete" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Home" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Seek to begining</Value>
+    </Setting>
+    <Setting Name="End" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Seek to end</Value>
+    </Setting>
+    <Setting Name="PageUp" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="PageDown" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SpaceBar" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Play/pause player</Value>
+    </Setting>
+    <Setting Name="ArrowLeft" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Seek back 5 seconds</Value>
+    </Setting>
+    <Setting Name="ArrowRight" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Seek forward 5 seconds</Value>
+    </Setting>
+    <Setting Name="ArrowUp" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Increase volume 5%</Value>
+    </Setting>
+    <Setting Name="ArrowDown" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Decrease volume 5%</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

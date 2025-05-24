@@ -1,4 +1,6 @@
-﻿namespace YT_DLP.player
+﻿using YT_DLP.player.controls;
+
+namespace YT_DLP.player
 {
     partial class frm_Settings
     {
@@ -28,9 +30,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frm_Settings));
             FormTitleLabel = new Label();
-            SaveButton = new controls.DLPButtonHighlighted();
-            DiscardButton = new controls.DLPButton();
+            SaveButton = new DLPButtonHighlighted();
+            DiscardButton = new DLPButton();
             groupBox2 = new GroupBox();
             DefualtVolumeNUD = new NumericUpDown();
             label8 = new Label();
@@ -40,6 +43,7 @@
             DefaultVolumeTB = new Label();
             NormalizeVolumeCB = new CheckBox();
             DownloadBehaviourPanel = new GroupBox();
+            HideDownloadsCB = new CheckBox();
             LargeDownloadThresholdNUD = new NumericUpDown();
             WarningThresholdLabel = new Label();
             LargeDownloadWarningCB = new CheckBox();
@@ -51,15 +55,12 @@
             DownloadLocationLabel = new Label();
             DownloadLocationTB = new TextBox();
             DeleteOnCloseCB = new CheckBox();
-            ResetButton = new controls.DLPButton();
+            ResetButton = new DLPButton();
             label1 = new Label();
-            comboBox1 = new ComboBox();
-            groupBox1 = new GroupBox();
             groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)DefualtVolumeNUD).BeginInit();
             DownloadBehaviourPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)LargeDownloadThresholdNUD).BeginInit();
-            groupBox1.SuspendLayout();
             SuspendLayout();
             // 
             // FormTitleLabel
@@ -199,6 +200,7 @@
             // DownloadBehaviourPanel
             // 
             DownloadBehaviourPanel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+            DownloadBehaviourPanel.Controls.Add(HideDownloadsCB);
             DownloadBehaviourPanel.Controls.Add(LargeDownloadThresholdNUD);
             DownloadBehaviourPanel.Controls.Add(WarningThresholdLabel);
             DownloadBehaviourPanel.Controls.Add(LargeDownloadWarningCB);
@@ -213,15 +215,26 @@
             DownloadBehaviourPanel.ForeColor = Color.FromArgb(255, 255, 254);
             DownloadBehaviourPanel.Location = new Point(12, 42);
             DownloadBehaviourPanel.Name = "DownloadBehaviourPanel";
-            DownloadBehaviourPanel.Size = new Size(205, 205);
+            DownloadBehaviourPanel.Size = new Size(205, 269);
             DownloadBehaviourPanel.TabIndex = 4;
             DownloadBehaviourPanel.TabStop = false;
             DownloadBehaviourPanel.Text = "Download Behaviour";
             // 
+            // HideDownloadsCB
+            // 
+            HideDownloadsCB.AutoSize = true;
+            HideDownloadsCB.Location = new Point(6, 60);
+            HideDownloadsCB.Margin = new Padding(3, 0, 3, 0);
+            HideDownloadsCB.Name = "HideDownloadsCB";
+            HideDownloadsCB.Size = new Size(168, 19);
+            HideDownloadsCB.TabIndex = 15;
+            HideDownloadsCB.Text = "Hide downloads on launch";
+            HideDownloadsCB.UseVisualStyleBackColor = true;
+            // 
             // LargeDownloadThresholdNUD
             // 
             LargeDownloadThresholdNUD.Increment = new decimal(new int[] { 100, 0, 0, 0 });
-            LargeDownloadThresholdNUD.Location = new Point(140, 176);
+            LargeDownloadThresholdNUD.Location = new Point(140, 195);
             LargeDownloadThresholdNUD.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             LargeDownloadThresholdNUD.Name = "LargeDownloadThresholdNUD";
             LargeDownloadThresholdNUD.Size = new Size(59, 23);
@@ -231,7 +244,7 @@
             // WarningThresholdLabel
             // 
             WarningThresholdLabel.AutoSize = true;
-            WarningThresholdLabel.Location = new Point(5, 178);
+            WarningThresholdLabel.Location = new Point(5, 197);
             WarningThresholdLabel.Name = "WarningThresholdLabel";
             WarningThresholdLabel.Size = new Size(105, 15);
             WarningThresholdLabel.TabIndex = 13;
@@ -240,7 +253,7 @@
             // LargeDownloadWarningCB
             // 
             LargeDownloadWarningCB.AutoSize = true;
-            LargeDownloadWarningCB.Location = new Point(6, 156);
+            LargeDownloadWarningCB.Location = new Point(6, 175);
             LargeDownloadWarningCB.Margin = new Padding(3, 0, 3, 0);
             LargeDownloadWarningCB.Name = "LargeDownloadWarningCB";
             LargeDownloadWarningCB.Size = new Size(157, 19);
@@ -255,7 +268,7 @@
             PreferredLanguageTB.BorderStyle = BorderStyle.FixedSingle;
             PreferredLanguageTB.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             PreferredLanguageTB.ForeColor = Color.White;
-            PreferredLanguageTB.Location = new Point(140, 77);
+            PreferredLanguageTB.Location = new Point(140, 96);
             PreferredLanguageTB.MaxLength = 3;
             PreferredLanguageTB.Name = "PreferredLanguageTB";
             PreferredLanguageTB.Size = new Size(59, 23);
@@ -264,7 +277,7 @@
             // PreferredLanguageLabel
             // 
             PreferredLanguageLabel.AutoSize = true;
-            PreferredLanguageLabel.Location = new Point(6, 79);
+            PreferredLanguageLabel.Location = new Point(6, 98);
             PreferredLanguageLabel.Name = "PreferredLanguageLabel";
             PreferredLanguageLabel.Size = new Size(107, 15);
             PreferredLanguageLabel.TabIndex = 9;
@@ -273,7 +286,7 @@
             // DownloadSubtitlesCB
             // 
             DownloadSubtitlesCB.AutoSize = true;
-            DownloadSubtitlesCB.Location = new Point(6, 60);
+            DownloadSubtitlesCB.Location = new Point(6, 79);
             DownloadSubtitlesCB.Margin = new Padding(3, 0, 3, 0);
             DownloadSubtitlesCB.Name = "DownloadSubtitlesCB";
             DownloadSubtitlesCB.Size = new Size(128, 19);
@@ -297,7 +310,7 @@
             DownloadLocationLeaveBlankLabel.AutoSize = true;
             DownloadLocationLeaveBlankLabel.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
             DownloadLocationLeaveBlankLabel.ForeColor = Color.FromArgb(224, 224, 224);
-            DownloadLocationLeaveBlankLabel.Location = new Point(6, 138);
+            DownloadLocationLeaveBlankLabel.Location = new Point(6, 157);
             DownloadLocationLeaveBlankLabel.Name = "DownloadLocationLeaveBlankLabel";
             DownloadLocationLeaveBlankLabel.Size = new Size(140, 15);
             DownloadLocationLeaveBlankLabel.TabIndex = 4;
@@ -306,7 +319,7 @@
             // DownloadLocationLabel
             // 
             DownloadLocationLabel.AutoSize = true;
-            DownloadLocationLabel.Location = new Point(6, 97);
+            DownloadLocationLabel.Location = new Point(6, 116);
             DownloadLocationLabel.Name = "DownloadLocationLabel";
             DownloadLocationLabel.Size = new Size(110, 15);
             DownloadLocationLabel.TabIndex = 3;
@@ -319,7 +332,7 @@
             DownloadLocationTB.BorderStyle = BorderStyle.FixedSingle;
             DownloadLocationTB.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             DownloadLocationTB.ForeColor = Color.White;
-            DownloadLocationTB.Location = new Point(6, 115);
+            DownloadLocationTB.Location = new Point(6, 134);
             DownloadLocationTB.Name = "DownloadLocationTB";
             DownloadLocationTB.Size = new Size(193, 23);
             DownloadLocationTB.TabIndex = 2;
@@ -355,6 +368,7 @@
             // 
             // label1
             // 
+            label1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
             label1.Location = new Point(169, 18);
@@ -364,27 +378,7 @@
             label1.Text = "Most of the settings are still being implemented";
             label1.Click += label1_Click;
             // 
-            // comboBox1
-            // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Items.AddRange(new object[] { "Dark", "Light" });
-            comboBox1.Location = new Point(6, 22);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(193, 23);
-            comboBox1.TabIndex = 21;
-            // 
-            // groupBox1
-            // 
-            groupBox1.Controls.Add(comboBox1);
-            groupBox1.ForeColor = Color.FromArgb(255, 255, 254);
-            groupBox1.Location = new Point(12, 253);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(205, 58);
-            groupBox1.TabIndex = 22;
-            groupBox1.TabStop = false;
-            groupBox1.Text = "Theme";
-            // 
-            // Settings
+            // frm_Settings
             // 
             AcceptButton = SaveButton;
             AutoScaleDimensions = new SizeF(96F, 96F);
@@ -393,7 +387,6 @@
             CancelButton = DiscardButton;
             ClientSize = new Size(440, 368);
             ControlBox = false;
-            Controls.Add(groupBox1);
             Controls.Add(label1);
             Controls.Add(ResetButton);
             Controls.Add(DownloadBehaviourPanel);
@@ -402,7 +395,8 @@
             Controls.Add(SaveButton);
             Controls.Add(FormTitleLabel);
             ForeColor = Color.White;
-            Name = "Settings";
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            Name = "frm_Settings";
             Text = "YT-DLP Player - Settings";
             Load += Settings_Load;
             groupBox2.ResumeLayout(false);
@@ -411,7 +405,6 @@
             DownloadBehaviourPanel.ResumeLayout(false);
             DownloadBehaviourPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)LargeDownloadThresholdNUD).EndInit();
-            groupBox1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -429,7 +422,6 @@
         private TextBox DownloadLocationTB;
         private Label DefaultVolumeTB;
         private CheckBox DownloadSubtitlesCB;
-        private CheckBox AutoplayCB;
         private TextBox PreferredLanguageTB;
         private Label PreferredLanguageLabel;
         private CheckBox NormalizeVolumeCB;
@@ -443,7 +435,7 @@
         private NumericUpDown DefualtVolumeNUD;
         private NumericUpDown LargeDownloadThresholdNUD;
         private Label label1;
-        private ComboBox comboBox1;
-        private GroupBox groupBox1;
+        private CheckBox HideDownloadsCB;
+        private CheckBox AutoplayCB;
     }
 }

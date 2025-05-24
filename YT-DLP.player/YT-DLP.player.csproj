@@ -8,6 +8,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
 	  <ForceDesignerDPIUnaware>true</ForceDesignerDPIUnaware>
 	  <UseWPF>False</UseWPF>
+	  <ApplicationIcon>DLPPLAYERICONSHORT.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="EmptyCursor.cur" />
@@ -20,6 +21,7 @@
     <PackageReference Include="VideoLAN.LibVLC.Windows" Version="3.0.21" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="DLPPLAYERICONSHORT.ico" />
     <Content Include="EmptyCursor.cur">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -34,6 +36,14 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Update="YT_DLP.hotkeys\HotKeys.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>HotKeys.settings</DependentUpon>
+    </Compile>
+    <Compile Update="YT_DLP.player.controls\DLPButtonHotkey.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Update="YT_DLP.player.statusImages\res_StatusImages.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -55,6 +65,10 @@
     <None Update="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Update="YT_DLP.hotkeys\HotKeys.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>HotKeys.Designer.cs</LastGenOutput>
     </None>
     <None Update="YT_DLP.player.statusImages\cannotplayvideo.PNG">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>

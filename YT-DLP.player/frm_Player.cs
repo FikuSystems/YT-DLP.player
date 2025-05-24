@@ -19,8 +19,8 @@ namespace YT_DLP.player
         private LibVLC _libVLC;
         private MediaPlayer _mediaPlayer;
 
-        private string YTDLPMirrorLink = "https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp.exe";
-        private string FFMPEGZipUrl = "https://www.gyan.dev/ffmpeg/builds/ffmpeg-release-essentials.zip";
+        private static readonly string YTDLPMirrorLink = "https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp.exe";
+        private static readonly string FFMPEGZipUrl = "https://www.gyan.dev/ffmpeg/builds/ffmpeg-release-essentials.zip";
 
         private Cursor _emptyCursor;
 
@@ -28,30 +28,14 @@ namespace YT_DLP.player
         {
             Properties.Settings.Default.Reload();
             InitializeComponent();
-            EnableDarkTitleBar(Handle);
+
+            
 
             // Initialize non-nullable fields to avoid CS8618 warnings
             _libVLC = new LibVLC();
             _mediaPlayer = new MediaPlayer(_libVLC);
             _emptyCursor = new Cursor("EmptyCursor.cur");
         }
-
-        #region DarkTitleBar
-        private static void EnableDarkTitleBar(IntPtr handle)
-        {
-            if (Environment.OSVersion.Version.Build >= 17763) // Windows 10 1809+
-            {
-                int useImmersiveDarkMode = 1;
-                DwmSetWindowAttribute(handle, DWMWA_USE_IMMERSIVE_DARK_MODE, ref useImmersiveDarkMode, sizeof(int));
-            }
-        }
-
-        private const int DWMWA_USE_IMMERSIVE_DARK_MODE = 20;
-
-        [DllImport("dwmapi.dll")]
-        private static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, ref int attrValue, int attrSize);
-        #endregion
-
         #region Settings
         private bool DeleteOnClose;
         private bool AutoPlayAfterDownload;
@@ -84,6 +68,8 @@ namespace YT_DLP.player
             // Domain/ Numberic Up-Downs
             LargeDownloadsThreshold = Properties.Settings.Default.LargeDownloadsThreshold;
             DefaultVolume = Properties.Settings.Default.DefaultVolume;
+
+            ApplyBasicSettings();
         }
 
         private void ApplyBasicSettings()
@@ -101,8 +87,13 @@ namespace YT_DLP.player
             // >> Download Audio Format <<
             // >> Large Downloads Threshold <<
 
+            // Volume
             VolumeTrackBar.Value = DefaultVolume;
             VolumeLabel.Text = $"Volume {VolumeTrackBar.Value}%";
+            _mediaPlayer.Volume = DefaultVolume;
+
+            // Autoplay button text
+            FindVideoButton.Text = AutoPlayAfterDownload ? "Play" : "Get";
         }
         #endregion
 
@@ -125,7 +116,6 @@ namespace YT_DLP.player
 
             GetVideos();
             GetSettings();
-            ApplyBasicSettings();
         }
 
         private void GetVideos()
@@ -191,15 +181,11 @@ namespace YT_DLP.player
                         {
                             try
                             {
-                                using (var client = new HttpClient())
-                                {
-                                    var thumbnailBytes = await client.GetByteArrayAsync(thumbnailUrl);
-                                    using (var ms = new MemoryStream(thumbnailBytes))
-                                    {
-                                        var thumbnailImage = Image.FromStream(ms);
-                                        Invoke(() => videoControl.pictureBox1.Image = thumbnailImage);
-                                    }
-                                }
+                                using var client = new HttpClient();
+                                var thumbnailBytes = await client.GetByteArrayAsync(thumbnailUrl);
+                                using var ms = new MemoryStream(thumbnailBytes);
+                                Image thumbnailImage = Image.FromStream(ms);
+                                Invoke(() => videoControl.pictureBox1.Image = thumbnailImage);
                             }
                             catch (Exception ex)
                             {
@@ -237,7 +223,7 @@ namespace YT_DLP.player
             }
         }
 
-        private string CleanUrl(string url)
+        private static string CleanUrl(string url)
         {
             // Replace or remove problematic characters for NTFS compatibility
             string cleanedUrl = url;
@@ -262,7 +248,7 @@ namespace YT_DLP.player
             }
         }
 
-        private void trackBar2_Scroll(object sender, EventArgs e)
+        private void VolumeTrackBar_Scroll(object sender, EventArgs e)
         {
             _mediaPlayer.Volume = VolumeTrackBar.Value;
             VolumeLabel.Text = $"Volume {VolumeTrackBar.Value}%";
@@ -286,7 +272,7 @@ namespace YT_DLP.player
                 Size = PreviousSize;
                 IsFullscreen = false;
                 TopPanel.Show();
-                ControlPanel.Height = 215;
+                ControlPanelChangeMode(0); // Standard Mode
             }
         }
 
@@ -347,15 +333,16 @@ namespace YT_DLP.player
                     Size = PreviousSize;
                     IsFullscreen = false;
                     TopPanel.Show();
-                    ControlPanel.Height = 215;
+                    ControlPanelChangeMode(0); // Standard Mode
+
                 }
             }));
         }
 
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        private async void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             // Show optional closing dialog
-            frm_Closing closing = new frm_Closing();
+            frm_Closing closing = new();
             closing.Show();
             closing.BringToFront();
             closing.Focus();
@@ -372,28 +359,28 @@ namespace YT_DLP.player
 
                 _libVLC?.Dispose();
 
-                // Wait a moment to ensure file handles are released
-                System.Threading.Thread.Sleep(300);
-
                 if (DeleteOnClose)
                 {
-                    // Delete all media files in the Downloads folder
+                    // Delete all media files in the Downloads folder asynchronously
                     string exeDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!;
                     string downloadsDir = Path.Combine(exeDir, "Downloads");
 
                     if (Directory.Exists(downloadsDir))
                     {
-                        foreach (string file in Directory.GetFiles(downloadsDir))
+                        await Task.Run(() =>
                         {
-                            try
+                            foreach (string file in Directory.GetFiles(downloadsDir))
                             {
-                                System.IO.File.Delete(file);
+                                try
+                                {
+                                    System.IO.File.Delete(file);
+                                }
+                                catch (Exception ex)
+                                {
+                                    Debug.WriteLine($"Could not delete file {file}: {ex.Message}");
+                                }
                             }
-                            catch (Exception ex)
-                            {
-                                Debug.WriteLine($"Could not delete file {file}: {ex.Message}");
-                            }
-                        }
+                        });
                     }
                 }
             }
@@ -432,7 +419,7 @@ namespace YT_DLP.player
 
         #region FileDownloader
 
-        private async Task<bool> DownloadAndExtractFFmpegAsync(string destinationPath, PictureBox statusIcon)
+        private static async Task<bool> DownloadAndExtractFFmpegAsync(string destinationPath, PictureBox statusIcon)
         {
             string tempZipPath = Path.Combine(Path.GetTempPath(), "ffmpeg.zip");
             string tempExtractPath = Path.Combine(Path.GetTempPath(), "ffmpeg_extracted");
@@ -448,19 +435,15 @@ namespace YT_DLP.player
                     ChangeArrow(statusIcon, "RightArrowShort_Blue");
 
                     // Use HttpClient with custom timeout
-                    using (HttpClient client = new HttpClient())
+                    using (HttpClient client = new())
                     {
                         client.Timeout = TimeSpan.FromMinutes(5); // Set timeout to 5 minutes (or adjust as needed)
 
-                        using (HttpResponseMessage response = await client.GetAsync(FFMPEGZipUrl))
-                        {
-                            response.EnsureSuccessStatusCode();
+                        using HttpResponseMessage response = await client.GetAsync(FFMPEGZipUrl);
+                        response.EnsureSuccessStatusCode();
 
-                            await using (FileStream fs = new FileStream(tempZipPath, FileMode.Create, FileAccess.Write, FileShare.None))
-                            {
-                                await response.Content.CopyToAsync(fs);
-                            }
-                        }
+                        await using FileStream fs = new(tempZipPath, FileMode.Create, FileAccess.Write, FileShare.None);
+                        await response.Content.CopyToAsync(fs);
                     }
 
                     // If the extraction folder already exists, clean it up
@@ -541,7 +524,7 @@ namespace YT_DLP.player
             Application.DoEvents();
             Enabled = false;
 
-            using HttpClient client = new HttpClient();
+            using HttpClient client = new();
 
             try
             {
@@ -553,7 +536,7 @@ namespace YT_DLP.player
                     using HttpResponseMessage response = await client.GetAsync(YTDLPMirrorLink);
                     response.EnsureSuccessStatusCode();
 
-                    using FileStream fs = new FileStream(ytDlpPath, FileMode.Create, FileAccess.Write, FileShare.None);
+                    using FileStream fs = new(ytDlpPath, FileMode.Create, FileAccess.Write, FileShare.None);
                     await response.Content.CopyToAsync(fs);
 
                     ChangeArrow(downloadingdialog.pictureBox1, "RightArrowShort_Green");
@@ -585,15 +568,13 @@ namespace YT_DLP.player
         }
 
 
-        private void ChangeArrow(PictureBox pictureBox, string resourceName)
+        private static void ChangeArrow(PictureBox pictureBox, string resourceName)
         {
             object? resource = Properties.Resources.ResourceManager.GetObject(resourceName);
             if (resource is byte[] imageBytes)
             {
-                using (MemoryStream ms = new MemoryStream(imageBytes))
-                {
-                    pictureBox.Image = Image.FromStream(ms);
-                }
+                using MemoryStream ms = new(imageBytes);
+                pictureBox.Image = Image.FromStream(ms);
             }
             else if (resource is Image img)
             {
@@ -606,35 +587,6 @@ namespace YT_DLP.player
         }
 
         #endregion
-
-        //private void FindVideoButton_Click(object sender, EventArgs e)
-        //{
-        //    if (!string.IsNullOrEmpty(URLTextBox.Text))
-        //    {
-        //        using var media = new Media(_libVLC, "d:\\Videos\\Animepahe Jujutsu Kaisen - 29 1080P Subsplease.mp4");
-        //        _mediaPlayer.Play(media);
-        //    }
-        //    PlayPauseButton.Text = "Pause";
-        //    PlayerControlsPanel.Enabled = true;
-        //
-        //    Invoke(new Action(() =>
-        //    {
-        //        if (_mediaPlayer.Media?.Mrl != null)
-        //        {
-        //            // Convert MRL (media resource locator) to a file path
-        //            var uri = new Uri(_mediaPlayer.Media.Mrl);
-        //            string fileName = Path.GetFileNameWithoutExtension(uri.LocalPath);
-        //
-        //            Text = $"YT-DLP Player - {fileName}";
-        //            VideoTitleLabel.Text = fileName;
-        //        }
-        //        else
-        //        {
-        //            Text = "YT-DLP Player";
-        //            VideoTitleLabel.Text = "Unknown Title";
-        //        }
-        //    }));
-        //}
 
         private async void FindVideoButton_Click(object sender, EventArgs e)
         {
@@ -669,7 +621,6 @@ namespace YT_DLP.player
             }
             GetVideos();
         }
-
         private async Task<string?> DownloadVideoAsync(string videoUrl)
         {
             string exeDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!;
@@ -682,9 +633,15 @@ namespace YT_DLP.player
 
             string ytDlpPath = Path.Combine(exeDir, "yt-dlp.exe");
 
-            frm_DownloadingVideo downloadingDialog = new frm_DownloadingVideo();
+            frm_DownloadingVideo downloadingDialog = new();
             downloadingDialog.Text = "YT-DLP Player - Downloading...";
             downloadingDialog.Show(this);
+
+            // Reset and show the progress bar
+            Invoke(() =>
+            {
+                DownloadProgress_PB.Value = 0;
+            });
 
             // Download the video using yt-dlp
             ProcessStartInfo psi = new()
@@ -706,6 +663,9 @@ namespace YT_DLP.player
             process.BeginErrorReadLine();
 
             await process.WaitForExitAsync();
+
+            // Reset progress bar after completion
+            Invoke(() => DownloadProgress_PB.Value = 0);
 
             downloadingDialog.Close();
             downloadingDialog.Dispose();
@@ -746,10 +706,18 @@ namespace YT_DLP.player
                 }
             }
 
+            if (!AutoPlayAfterDownload)
+                Check_ShowDownloads.BackColor = Color.FromArgb(240, 0, 54);
+            Check_ShowDownloads.Refresh();
+            await Task.Delay(500).ContinueWith(_ =>
+            {
+                Invoke(() => Check_ShowDownloads.BackColor = Color.FromArgb(64, 64, 64));
+            });
+
             return downloadedFile;
         }
 
-        private string ExtractVideoIdFromUrl(string url)
+        private static string ExtractVideoIdFromUrl(string url)
         {
             // Check for YouTube URL with v= parameter (e.g., https://www.youtube.com/watch?v=dQw4w9WgXcQ)
             var match = Regex.Match(url, @"(?:https?://(?:www\.)?youtube\.com/watch\?v=|youtu\.be/)([a-zA-Z0-9_-]+)");
@@ -760,7 +728,7 @@ namespace YT_DLP.player
         {
             if (string.IsNullOrWhiteSpace(line)) return;
 
-            if (line.Contains("[download]") && line.Contains("%"))
+            if (line.Contains("[download]") && line.Contains('%'))
             {
                 var match = Regex.Match(line, @"\[download\]\s+(\d{1,3}\.\d)%");
 
@@ -769,14 +737,13 @@ namespace YT_DLP.player
                     // Ensure thread-safe update of UI elements
                     dialog.Invoke(() =>
                     {
-                        // Change style to Continuous to reflect accurate progress
                         if (dialog.progressBar1.Style != ProgressBarStyle.Continuous)
                         {
                             dialog.progressBar1.Style = ProgressBarStyle.Continuous;
                         }
-
                         // Set the progress bar value, ensuring it's capped at 100
                         dialog.progressBar1.Value = Math.Min((int)progress, 100);
+                        DownloadProgress_PB.Value = Math.Min((int)progress, 100);
 
                         // Update the label with the current progress percentage
                         dialog.label1.Text = $"Downloading Video ({progress:0.0}%)";
@@ -793,16 +760,51 @@ namespace YT_DLP.player
             settingsdialog.Dispose();
         }
 
-        private void panel1_Paint(object sender, PaintEventArgs e)
+        private void ControlPanelSize(int SizeType)
         {
-
+            switch (SizeType)
+            {
+                case 0:
+                    ControlPanel.Height = 215; //Standard
+                    break;
+                case 1:
+                    ControlPanel.Height = 111; //HiddenDownloads
+                    break;
+                case 2:
+                    ControlPanel.Height = 68; //Fullscreen
+                    break;
+                case 3:
+                    ControlPanel.Height = 1; //Hidden
+                    break;
+            }
         }
+
+        private void ControlPanelChangeMode(int Mode)
+        {
+            switch (Mode)
+            {
+                case 0: //Standard Mode
+                    if (!Check_ShowDownloads.Checked)
+                    {
+                        ControlPanelSize(0);
+                    }
+                    else
+                    {
+                        ControlPanelSize(1);
+                    }
+                    break;
+                case 2: //Fullscreen Mode
+                    ControlPanelSize(2);
+                    break;
+            }
+        }
+
         private bool IsFullscreen = false;
         private Size PreviousSize;
         private bool _cursorHidden = false;
         private Point _lastMousePosition;
 
-        private void dlpButton2_Click(object sender, EventArgs e)
+        private void btn_FullScreen_Click(object sender, EventArgs e)
         {
             ChangeToFullScreen();
         }
@@ -820,7 +822,7 @@ namespace YT_DLP.player
 
                 TopPanel.Show();
                 ShowPanel();
-                ControlPanel.Height = 215;
+                ControlPanelChangeMode(0); // Standard Mode
 
 
                 videoView1.Cursor = Cursors.Default;
@@ -838,7 +840,7 @@ namespace YT_DLP.player
                 WindowState = FormWindowState.Maximized;
 
                 TopPanel.Hide();
-                ControlPanel.Height = 68;
+                ControlPanelChangeMode(2); // Fullscreen Mode
                 ShowPanel();
 
                 RestartFullScreenTimer();
@@ -953,7 +955,7 @@ namespace YT_DLP.player
         {
             if (IsFullscreen)
             {
-                ControlPanel.Height = 68;
+                ControlPanelChangeMode(2); // Fullscreen Mode
                 SeekTrackBar.Show();
                 ControlPanel.BackColor = Color.FromArgb(26, 26, 26);
             }
@@ -967,7 +969,7 @@ namespace YT_DLP.player
                     toolTip1.Show("Move mouse to bottom to reveal controls, or press ESC to exit fullscreen.", ControlPanel);
                     showtip = false;
                 }
-                ControlPanel.Height = 1;
+                ControlPanelSize(3); // Hidden
                 SeekTrackBar.Hide();
                 ControlPanel.BackColor = Color.Black;
             }
@@ -982,6 +984,26 @@ namespace YT_DLP.player
         private void TopPanel_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void ShowDownloads_Check_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!Check_ShowDownloads.Checked)
+            {
+                ControlPanelSize(0);
+                Check_ShowDownloads.Text = "Hide Downloads";
+            }
+            else
+            {
+                ControlPanelSize(1);
+                Check_ShowDownloads.Text = "Show Downloads";
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            frm_Hotkeys hotkeysForm = new();
+            hotkeysForm.ShowDialog();
         }
     }
 }

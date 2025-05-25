@@ -28,11 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             pictureBox1 = new PictureBox();
             VideoTitleLabel = new Label();
             VideoURLLabel = new Label();
             TimeLabel = new Label();
-            WatchNowButton = new controls.DLPButtonHighlighted();
+            WatchNowButton = new YT_DLP.player.controls.DLPButtonHighlighted();
+            toolTip1 = new ToolTip(components);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
@@ -58,11 +60,13 @@
             // VideoURLLabel
             // 
             VideoURLLabel.AutoEllipsis = true;
+            VideoURLLabel.Cursor = Cursors.Hand;
             VideoURLLabel.Location = new Point(114, 26);
             VideoURLLabel.Name = "VideoURLLabel";
             VideoURLLabel.Size = new Size(327, 22);
             VideoURLLabel.TabIndex = 3;
             VideoURLLabel.Text = "%video url%";
+            VideoURLLabel.Click += VideoURLLabel_Click;
             // 
             // TimeLabel
             // 
@@ -91,6 +95,11 @@
             WatchNowButton.Text = "Watch Now";
             WatchNowButton.UseVisualStyleBackColor = false;
             // 
+            // toolTip1
+            // 
+            toolTip1.ToolTipIcon = ToolTipIcon.Info;
+            toolTip1.ToolTipTitle = "Copied!";
+            // 
             // DownloadedVideos
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -117,5 +126,6 @@
         public Label VideoURLLabel;
         public Label TimeLabel;
         public controls.DLPButtonHighlighted WatchNowButton;
+        private ToolTip toolTip1;
     }
 }

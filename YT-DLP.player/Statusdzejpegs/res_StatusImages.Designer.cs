@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace YT_DLP.player.YT_DLP.player.statusImages {
+namespace YT_DLP.player.Statusdzejpegs {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace YT_DLP.player.YT_DLP.player.statusImages {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("YT_DLP.player.YT_DLP.player.statusImages.res_StatusImages", typeof(res_StatusImages).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("YT_DLP.player.Statusdzejpegs.res_StatusImages", typeof(res_StatusImages).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

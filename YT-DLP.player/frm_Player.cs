@@ -29,7 +29,7 @@ namespace YT_DLP.player
             Properties.Settings.Default.Reload();
             InitializeComponent();
 
-            
+
 
             // Initialize non-nullable fields to avoid CS8618 warnings
             _libVLC = new LibVLC();
@@ -96,13 +96,29 @@ namespace YT_DLP.player
             FindVideoButton.Text = AutoPlayAfterDownload ? "Play" : "Get";
         }
         #endregion
+        private void ShowNotificationPanel(string message, bool autohide)
+        {
+            NotificationPanel.Visible = true;
+            NotificationLabel.Text = message;
+            // Hide after 5 seconds
+            if (!autohide) return;
+            NotificationButton.Hide();
+            Task.Run(async () =>
+            {
+                await Task.Delay(5000);
+                Invoke(new Action(() => NotificationPanel.Visible = false));
+            });
+        }
 
         private async void Form1_Load(object sender, EventArgs e)
         {
+            //bool isMetered = NetworkHelper.IsConnectedToMeteredNetwork();
+            //if (isMetered)
+            //{
+            //    ShowNotificationPanel("You are connected to a metered network. Downloads may incur additional charges.", false);
+            //}
             KeyPreview = true;
 
-            //Form2 form2 = new();
-            //form2.Show();
             _libVLC = new LibVLC();
             _mediaPlayer = new MediaPlayer(_libVLC);
             videoView1.MediaPlayer = _mediaPlayer;
@@ -706,13 +722,13 @@ namespace YT_DLP.player
                 }
             }
 
-            if (!AutoPlayAfterDownload)
-                Check_ShowDownloads.BackColor = Color.FromArgb(240, 0, 54);
-            Check_ShowDownloads.Refresh();
-            await Task.Delay(500).ContinueWith(_ =>
-            {
-                Invoke(() => Check_ShowDownloads.BackColor = Color.FromArgb(64, 64, 64));
-            });
+            //if (!AutoPlayAfterDownload)
+            //    Check_ShowDownloads.BackColor = Color.FromArgb(240, 0, 54);
+            //Check_ShowDownloads.Refresh();
+            //await Task.Delay(500).ContinueWith(_ =>
+            //{
+            //    Invoke(() => Check_ShowDownloads.BackColor = Color.FromArgb(64, 64, 64));
+            //});
 
             return downloadedFile;
         }
@@ -889,30 +905,6 @@ namespace YT_DLP.player
             FullScreenControlHide.Stop();
         }
 
-        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
-        {
-            if (IsFullscreen && keyData == Keys.Escape)
-            {
-                ShowPanel();
-                ControlPanel.BackColor = Color.FromArgb(26, 26, 26);
-                ChangeToFullScreen();
-                return true;
-
-            }
-
-            return base.ProcessCmdKey(ref msg, keyData);
-        }
-
-        private void MainForm_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (IsFullscreen && e.KeyCode == Keys.Escape)
-            {
-                ShowPanel();
-                ChangeToFullScreen();
-                e.Handled = true;
-            }
-        }
-
         private void PlayerControlsPanel_MouseEnter(object sender, EventArgs e)
         {
             FullScreenControlHide.Stop();
@@ -966,7 +958,7 @@ namespace YT_DLP.player
             {
                 if (showtip)
                 {
-                    toolTip1.Show("Move mouse to bottom to reveal controls, or press ESC to exit fullscreen.", ControlPanel);
+                    toolTip1.Show("Move mouse to bottom to reveal controls, or press ESC to exit fullscreen.", ControlPanel, 5000);
                     showtip = false;
                 }
                 ControlPanelSize(3); // Hidden
@@ -999,11 +991,284 @@ namespace YT_DLP.player
                 Check_ShowDownloads.Text = "Show Downloads";
             }
         }
-
+        #region Hotkeys
+        // Open the hotkeys dialog form
         private void button1_Click(object sender, EventArgs e)
         {
-            frm_Hotkeys hotkeysForm = new();
+            Hotkeys.frm_Hotkeys hotkeysForm = new();
             hotkeysForm.ShowDialog();
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (IsFullscreen && keyData == Keys.Escape)
+            {
+                ShowPanel();
+                ControlPanel.BackColor = Color.FromArgb(26, 26, 26);
+                ChangeToFullScreen();
+                return true;
+
+            }
+            if (URLTextBox.Focused || RecentVideosFlow.Focused || PlayerControlsPanel.Focused)
+            {
+                // If any of these controls are focused, do not process hotkeys
+                return base.ProcessCmdKey(ref msg, keyData);
+            }
+            // Call hotkey handler
+            if (HandlePlayerHotkey(keyData))
+                return true;
+
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        private void MainForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (IsFullscreen && e.KeyCode == Keys.Escape)
+            {
+                ShowPanel();
+                ChangeToFullScreen();
+                e.Handled = true;
+            }
+
+        }
+
+        private bool HandlePlayerHotkey(Keys keyData)
+        {
+            // Map Keys to HotKeys.settings property names
+            string? hotkeyName = keyData switch
+            {
+                Keys.D1 or Keys.NumPad1 => "K1",
+                Keys.D2 or Keys.NumPad2 => "K2",
+                Keys.D3 or Keys.NumPad3 => "K3",
+                Keys.D4 or Keys.NumPad4 => "K4",
+                Keys.D5 or Keys.NumPad5 => "K5",
+                Keys.D6 or Keys.NumPad6 => "K6",
+                Keys.D7 or Keys.NumPad7 => "K7",
+                Keys.D8 or Keys.NumPad8 => "K8",
+                Keys.D9 or Keys.NumPad9 => "K9",
+                Keys.D0 or Keys.NumPad0 => "K0",
+                Keys.Q => "Q",
+                Keys.W => "W",
+                Keys.E => "E",
+                Keys.R => "R",
+                Keys.T => "T",
+                Keys.Y => "Y",
+                Keys.U => "U",
+                Keys.I => "I",
+                Keys.O => "O",
+                Keys.P => "P",
+                Keys.A => "A",
+                Keys.S => "S",
+                Keys.D => "D",
+                Keys.F => "F",
+                Keys.G => "G",
+                Keys.H => "H",
+                Keys.J => "J",
+                Keys.K => "K",
+                Keys.L => "L",
+                Keys.Z => "Z",
+                Keys.X => "X",
+                Keys.C => "C",
+                Keys.V => "V",
+                Keys.B => "B",
+                Keys.N => "N",
+                Keys.M => "M",
+                Keys.Oemcomma => "Comma",
+                Keys.OemPeriod => "Period",
+                Keys.OemQuestion => "ForwardSlash",
+                Keys.Insert => "Insert",
+                Keys.Delete => "Delete",
+                Keys.Home => "Home",
+                Keys.End => "End",
+                Keys.PageUp => "PageUp",
+                Keys.PageDown => "PageDown",
+                Keys.Space => "Space",
+                Keys.Left => "ArrowLeft",
+                Keys.Right => "ArrowRight",
+                Keys.Up => "ArrowUp",
+                Keys.Down => "ArrowDown",
+                _ => null
+            };
+
+            if (hotkeyName == null)
+                return false;
+
+            // Get the action string from settings
+            string action = YT_DLP.player.Hotkeys.HotKeys.Default[hotkeyName]?.ToString() ?? "";
+            if (string.IsNullOrWhiteSpace(action))
+                return false;
+
+            // Perform the action
+            return PerformHotkeyAction(action);
+        }
+        private bool PerformHotkeyAction(string action)
+        {
+            // You can use a switch or if-else to match action strings
+            switch (action)
+            {
+                case "Play/pause player":
+                    PlayPauseButton.PerformClick();
+                    return true;
+                case "Seek back 10 seconds":
+                    SeekRelative(-10);
+                    return true;
+                case "Seek forward 10 seconds":
+                    SeekRelative(10);
+                    return true;
+                case "Seek back 5 seconds":
+                    SeekRelative(-5);
+                    return true;
+                case "Seek forward 5 seconds":
+                    SeekRelative(5);
+                    return true;
+                case "Increase volume 5%":
+                    ChangeVolume(5);
+                    return true;
+                case "Decrease volume 5%":
+                    ChangeVolume(-5);
+                    return true;
+                case "Mute/unmute player":
+                    MuteButton.PerformClick();
+                    return true;
+                case "Activate/exit fullscreen":
+                    if (IsFullscreen)
+                    {
+                        ShowPanel();
+                        ControlPanel.BackColor = Color.FromArgb(26, 26, 26);
+                        ChangeToFullScreen();
+                    }
+                    else
+                    {
+                        btn_FullScreen.PerformClick();
+                    }
+                    return true;
+                case "Seek to begining":
+                    _mediaPlayer.Time = 0;
+                    return true;
+                case "Seek to end":
+                    _mediaPlayer.Time = _mediaPlayer.Length;
+                    return true;
+                case "Skip player to 10%":
+                    SeekToPercentage(0.1);
+                    return true;
+                case "Skip player to 20%":
+                    SeekToPercentage(0.2);
+                    return true;
+                case "Skip player to 30%":
+                    SeekToPercentage(0.3);
+                    return true;
+                case "Skip player to 40%":
+                    SeekToPercentage(0.4);
+                    return true;
+                case "Skip player to 50%":
+                    SeekToPercentage(0.5);
+                    return true;
+                case "Skip player to 60%":
+                    SeekToPercentage(0.6);
+                    return true;
+                case "Skip player to 70%":
+                    SeekToPercentage(0.7);
+                    return true;
+                case "Skip player to 80%":
+                    SeekToPercentage(0.8);
+                    return true;
+                case "Skip player to 90%":
+                    SeekToPercentage(0.9);
+                    return true;
+                case "Go to URL box":
+                    URLTextBox.Focus();
+                    URLTextBox.SelectAll();
+                    return true;
+                case "Go back previous frame":
+                    GoToPreviousFrame();
+                    return true;
+                case "Skip to next frame":
+                    GoToNextFrame();
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        // Helper methods
+        private void GoToNextFrame()
+        {
+            if (_mediaPlayer == null) return;
+            if (_mediaPlayer.IsPlaying)
+                _mediaPlayer.Pause();
+
+            _mediaPlayer.NextFrame();
+        }
+        private void GoToPreviousFrame()
+        {
+            MessageBox.Show("This feature is not implemented yet, but will be in a future update.", "Unimplemented Feature", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+
+        private void SeekToPercentage(double percentage)
+        {
+            if (_mediaPlayer == null || _mediaPlayer.Length <= 0) return;
+            long newTime = (long)(_mediaPlayer.Length * percentage);
+            _mediaPlayer.Time = newTime;
+        }
+        private void SeekRelative(int seconds)
+        {
+            if (_mediaPlayer == null || _mediaPlayer.Length <= 0) return;
+            long newTime = Math.Max(0, Math.Min(_mediaPlayer.Time + seconds * 1000, _mediaPlayer.Length));
+            _mediaPlayer.Time = newTime;
+        }
+
+        private void ChangeVolume(int delta)
+        {
+            if (_mediaPlayer.Mute)
+            {
+                MuteButton.PerformClick();
+            }
+            int newVolume = Math.Max(0, Math.Min(100, _mediaPlayer.Volume + delta));
+            _mediaPlayer.Volume = newVolume;
+            VolumeTrackBar.Value = newVolume;
+            VolumeLabel.Text = $"Volume {newVolume}%";
+        }
+
+        #endregion
+
+        private void MuteButton_Click(object sender, EventArgs e)
+        {
+            _mediaPlayer.Mute = !_mediaPlayer.Mute;
+            if (!_mediaPlayer.Mute)
+            {
+                MuteButton.Text = "Unmute";
+                VolumeTrackBar.Enabled = false;
+                VolumeLabel.Text = "Volume Muted";
+            }
+            else
+            {
+                MuteButton.Text = "Mute";
+                VolumeTrackBar.Enabled = true;
+                VolumeLabel.Text = $"Volume {VolumeTrackBar.Value}%";
+            }
+        }
+
+        private void URLTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Return:
+                    e.SuppressKeyPress = true;
+                    videoView1.Focus();
+                    FindVideoButton.PerformClick();
+                    break;
+                case Keys.Escape:
+                    e.SuppressKeyPress = true;
+                    videoView1.Focus();
+                    break;
+            }
+
+        }
+
+        private void dlpButton1_Click(object sender, EventArgs e)
+        {
+            NotificationPanel.Hide();
         }
     }
 }

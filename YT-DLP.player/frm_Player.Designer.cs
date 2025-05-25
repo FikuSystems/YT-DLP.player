@@ -46,6 +46,7 @@ namespace YT_DLP.player
             PlayerPanel = new Panel();
             RecentVideosFlow = new FlowLayoutPanel();
             PlayerControlsPanel = new Panel();
+            MuteButton = new DLPButton();
             VolumeLabel = new Label();
             VolumeTrackBar = new TrackBar();
             TotalTimeLabel = new Label();
@@ -60,6 +61,10 @@ namespace YT_DLP.player
             Check_ShowDownloads = new CheckBox();
             FullScreenControlHide = new System.Windows.Forms.Timer(components);
             toolTip1 = new ToolTip(components);
+            NotificationPanel = new Panel();
+            NotificationButton = new DLPButton();
+            pictureBox2 = new PictureBox();
+            NotificationLabel = new Label();
             TopPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel2.SuspendLayout();
@@ -70,6 +75,8 @@ namespace YT_DLP.player
             ((System.ComponentModel.ISupportInitialize)VolumeTrackBar).BeginInit();
             ((System.ComponentModel.ISupportInitialize)SeekTrackBar).BeginInit();
             ControlPanel.SuspendLayout();
+            NotificationPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             SuspendLayout();
             // 
             // TopPanel
@@ -107,7 +114,7 @@ namespace YT_DLP.player
             DownloadProgress_PB.Name = "DownloadProgress_PB";
             DownloadProgress_PB.Size = new Size(369, 5);
             DownloadProgress_PB.Style = ProgressBarStyle.Continuous;
-            DownloadProgress_PB.TabIndex = 3;
+            DownloadProgress_PB.TabIndex = 5;
             DownloadProgress_PB.Visible = false;
             // 
             // button1
@@ -121,7 +128,7 @@ namespace YT_DLP.player
             button1.Location = new Point(908, 15);
             button1.Name = "button1";
             button1.Size = new Size(70, 32);
-            button1.TabIndex = 4;
+            button1.TabIndex = 3;
             button1.Text = "Hot Keys";
             button1.UseVisualStyleBackColor = false;
             button1.Click += button1_Click;
@@ -173,7 +180,7 @@ namespace YT_DLP.player
             SettingsButton.Location = new Point(984, 15);
             SettingsButton.Name = "SettingsButton";
             SettingsButton.Size = new Size(70, 32);
-            SettingsButton.TabIndex = 5;
+            SettingsButton.TabIndex = 4;
             SettingsButton.Text = "Settings";
             SettingsButton.UseVisualStyleBackColor = false;
             SettingsButton.Click += SettingsButton_Click;
@@ -200,7 +207,8 @@ namespace YT_DLP.player
             URLTextBox.Name = "URLTextBox";
             URLTextBox.Size = new Size(366, 20);
             URLTextBox.TabIndex = 0;
-            URLTextBox.Text = "https://www.youtube.com/watch?v=Zgq3yZDhuxM";
+            URLTextBox.Text = "https://www.youtube.com/watch?v=6PjxUD_T9WI";
+            URLTextBox.KeyDown += URLTextBox_KeyDown;
             // 
             // videoView1
             // 
@@ -241,13 +249,15 @@ namespace YT_DLP.player
             RecentVideosFlow.Location = new Point(0, 111);
             RecentVideosFlow.Margin = new Padding(0);
             RecentVideosFlow.Name = "RecentVideosFlow";
+            RecentVideosFlow.Padding = new Padding(3, 0, 3, 0);
             RecentVideosFlow.Size = new Size(1068, 104);
-            RecentVideosFlow.TabIndex = 4;
+            RecentVideosFlow.TabIndex = 0;
             RecentVideosFlow.WrapContents = false;
             // 
             // PlayerControlsPanel
             // 
             PlayerControlsPanel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            PlayerControlsPanel.Controls.Add(MuteButton);
             PlayerControlsPanel.Controls.Add(VolumeLabel);
             PlayerControlsPanel.Controls.Add(VolumeTrackBar);
             PlayerControlsPanel.Controls.Add(TotalTimeLabel);
@@ -259,27 +269,44 @@ namespace YT_DLP.player
             PlayerControlsPanel.Location = new Point(12, 0);
             PlayerControlsPanel.Name = "PlayerControlsPanel";
             PlayerControlsPanel.Size = new Size(1044, 68);
-            PlayerControlsPanel.TabIndex = 0;
+            PlayerControlsPanel.TabIndex = 1;
             PlayerControlsPanel.MouseEnter += PlayerControlsPanel_MouseEnter;
             PlayerControlsPanel.MouseLeave += PlayerControlsPanel_MouseLeave;
+            // 
+            // MuteButton
+            // 
+            MuteButton.BackColor = Color.FromArgb(64, 64, 64);
+            MuteButton.FlatAppearance.BorderColor = Color.FromArgb(100, 100, 100);
+            MuteButton.FlatAppearance.MouseDownBackColor = Color.FromArgb(32, 32, 32);
+            MuteButton.FlatAppearance.MouseOverBackColor = Color.FromArgb(42, 42, 42);
+            MuteButton.FlatStyle = FlatStyle.Flat;
+            MuteButton.Font = new Font("Segoe UI", 9F);
+            MuteButton.ForeColor = Color.White;
+            MuteButton.Location = new Point(179, 33);
+            MuteButton.Name = "MuteButton";
+            MuteButton.Size = new Size(82, 32);
+            MuteButton.TabIndex = 5;
+            MuteButton.Text = "Mute";
+            MuteButton.UseVisualStyleBackColor = false;
+            MuteButton.Click += MuteButton_Click;
             // 
             // VolumeLabel
             // 
             VolumeLabel.AutoSize = true;
-            VolumeLabel.Location = new Point(342, 42);
+            VolumeLabel.Location = new Point(430, 42);
             VolumeLabel.Name = "VolumeLabel";
             VolumeLabel.Size = new Size(72, 15);
-            VolumeLabel.TabIndex = 6;
+            VolumeLabel.TabIndex = 7;
             VolumeLabel.Text = "Volume 80%";
             // 
             // VolumeTrackBar
             // 
             VolumeTrackBar.AutoSize = false;
-            VolumeTrackBar.Location = new Point(179, 37);
+            VolumeTrackBar.Location = new Point(267, 39);
             VolumeTrackBar.Maximum = 100;
             VolumeTrackBar.Name = "VolumeTrackBar";
             VolumeTrackBar.Size = new Size(157, 24);
-            VolumeTrackBar.TabIndex = 5;
+            VolumeTrackBar.TabIndex = 6;
             VolumeTrackBar.TickStyle = TickStyle.None;
             VolumeTrackBar.Value = 80;
             VolumeTrackBar.Scroll += VolumeTrackBar_Scroll;
@@ -366,7 +393,7 @@ namespace YT_DLP.player
             btn_FullScreen.Location = new Point(971, 33);
             btn_FullScreen.Name = "btn_FullScreen";
             btn_FullScreen.Size = new Size(82, 32);
-            btn_FullScreen.TabIndex = 1;
+            btn_FullScreen.TabIndex = 2;
             btn_FullScreen.Text = "Full Screen";
             btn_FullScreen.UseVisualStyleBackColor = false;
             btn_FullScreen.Click += btn_FullScreen_Click;
@@ -378,7 +405,7 @@ namespace YT_DLP.player
             VideoTitleLabel.Location = new Point(12, 73);
             VideoTitleLabel.Name = "VideoTitleLabel";
             VideoTitleLabel.Size = new Size(302, 30);
-            VideoTitleLabel.TabIndex = 2;
+            VideoTitleLabel.TabIndex = 3;
             VideoTitleLabel.Text = "Choose a video in the URL bar";
             // 
             // TimeTrackTimer
@@ -413,7 +440,7 @@ namespace YT_DLP.player
             Check_ShowDownloads.Location = new Point(938, 73);
             Check_ShowDownloads.Name = "Check_ShowDownloads";
             Check_ShowDownloads.Size = new Size(116, 32);
-            Check_ShowDownloads.TabIndex = 3;
+            Check_ShowDownloads.TabIndex = 4;
             Check_ShowDownloads.Text = "Hide Downloads";
             Check_ShowDownloads.TextAlign = ContentAlignment.MiddleCenter;
             Check_ShowDownloads.UseVisualStyleBackColor = false;
@@ -426,9 +453,58 @@ namespace YT_DLP.player
             // 
             // toolTip1
             // 
-            toolTip1.IsBalloon = true;
             toolTip1.ToolTipIcon = ToolTipIcon.Info;
             toolTip1.ToolTipTitle = "Guide";
+            // 
+            // NotificationPanel
+            // 
+            NotificationPanel.BackColor = Color.FromArgb(254, 252, 200);
+            NotificationPanel.Controls.Add(NotificationButton);
+            NotificationPanel.Controls.Add(pictureBox2);
+            NotificationPanel.Controls.Add(NotificationLabel);
+            NotificationPanel.Dock = DockStyle.Top;
+            NotificationPanel.Location = new Point(0, 63);
+            NotificationPanel.Name = "NotificationPanel";
+            NotificationPanel.Size = new Size(1068, 24);
+            NotificationPanel.TabIndex = 1;
+            NotificationPanel.Visible = false;
+            // 
+            // NotificationButton
+            // 
+            NotificationButton.BackColor = Color.FromArgb(254, 252, 200);
+            NotificationButton.FlatAppearance.BorderColor = Color.FromArgb(254, 252, 200);
+            NotificationButton.FlatAppearance.BorderSize = 0;
+            NotificationButton.FlatAppearance.MouseDownBackColor = Color.FromArgb(165, 166, 126);
+            NotificationButton.FlatAppearance.MouseOverBackColor = Color.FromArgb(197, 198, 151);
+            NotificationButton.FlatStyle = FlatStyle.Flat;
+            NotificationButton.Font = new Font("Segoe UI", 9F);
+            NotificationButton.ForeColor = Color.Black;
+            NotificationButton.Location = new Point(1032, 0);
+            NotificationButton.Name = "NotificationButton";
+            NotificationButton.Size = new Size(36, 24);
+            NotificationButton.TabIndex = 2;
+            NotificationButton.Text = "OK";
+            NotificationButton.UseVisualStyleBackColor = false;
+            NotificationButton.Click += dlpButton1_Click;
+            // 
+            // pictureBox2
+            // 
+            pictureBox2.Image = (Image)resources.GetObject("pictureBox2.Image");
+            pictureBox2.Location = new Point(5, 4);
+            pictureBox2.Name = "pictureBox2";
+            pictureBox2.Size = new Size(16, 16);
+            pictureBox2.TabIndex = 1;
+            pictureBox2.TabStop = false;
+            // 
+            // NotificationLabel
+            // 
+            NotificationLabel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            NotificationLabel.ForeColor = Color.Black;
+            NotificationLabel.Location = new Point(28, 4);
+            NotificationLabel.Name = "NotificationLabel";
+            NotificationLabel.Size = new Size(998, 15);
+            NotificationLabel.TabIndex = 0;
+            NotificationLabel.Text = "You are on a metered network. Dowloads can be in excess of over a gigabyte.";
             // 
             // Form1
             // 
@@ -436,6 +512,7 @@ namespace YT_DLP.player
             AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.FromArgb(26, 26, 26);
             ClientSize = new Size(1068, 610);
+            Controls.Add(NotificationPanel);
             Controls.Add(BodyPanel);
             Controls.Add(ControlPanel);
             Controls.Add(TopPanel);
@@ -460,6 +537,8 @@ namespace YT_DLP.player
             ((System.ComponentModel.ISupportInitialize)SeekTrackBar).EndInit();
             ControlPanel.ResumeLayout(false);
             ControlPanel.PerformLayout();
+            NotificationPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             ResumeLayout(false);
         }
 
@@ -492,5 +571,10 @@ namespace YT_DLP.player
         private Button button1;
         private ProgressBar DownloadProgress_PB;
         private PictureBox pictureBox1;
+        private DLPButton MuteButton;
+        private Panel NotificationPanel;
+        private PictureBox pictureBox2;
+        private Label NotificationLabel;
+        private DLPButton NotificationButton;
     }
 }

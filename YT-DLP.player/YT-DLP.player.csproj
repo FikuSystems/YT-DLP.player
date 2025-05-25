@@ -1,23 +1,30 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net9.0-windows</TargetFramework>
-    <RootNamespace>YT_DLP.player</RootNamespace>
-    <Nullable>enable</Nullable>
-    <UseWindowsForms>true</UseWindowsForms>
-    <ImplicitUsings>enable</ImplicitUsings>
-	  <ForceDesignerDPIUnaware>true</ForceDesignerDPIUnaware>
-	  <UseWPF>False</UseWPF>
-	  <ApplicationIcon>DLPPLAYERICONSHORT.ico</ApplicationIcon>
-  </PropertyGroup>
-  <ItemGroup>
+   <PropertyGroup>
+     <OutputType>WinExe</OutputType>
+	   <TargetPlatformIdentifier>Windows</TargetPlatformIdentifier>
+	   <TargetPlatformVersion>10.0.26100.0</TargetPlatformVersion>
+	   <RootNamespace>YT_DLP.player</RootNamespace>
+     <Nullable>enable</Nullable>
+     <UseWindowsForms>true</UseWindowsForms>
+     <ImplicitUsings>enable</ImplicitUsings>
+     <ForceDesignerDPIUnaware>true</ForceDesignerDPIUnaware>
+     <UseWPF>False</UseWPF>
+     <ApplicationIcon>DLPPLAYERICONSHORT.ico</ApplicationIcon>
+     <TargetFramework>net9.0</TargetFramework>
+     <SupportedOSPlatformVersion>10.0.19041.0</SupportedOSPlatformVersion>
+	   <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+	   <RuntimeIdentifiers>win-x64;win-x86;win-arm64</RuntimeIdentifiers>
+
+   </PropertyGroup>
+	<ItemGroup>
     <None Remove="EmptyCursor.cur" />
   </ItemGroup>
+	
   <ItemGroup>
     <PackageReference Include="LibVLCSharp" Version="3.9.3" />
     <PackageReference Include="LibVLCSharp.WinForms" Version="3.9.3" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="System.Text.Json" Version="9.0.4" />
+    <PackageReference Include="System.Text.Json" Version="9.0.5" />
     <PackageReference Include="VideoLAN.LibVLC.Windows" Version="3.0.21" />
   </ItemGroup>
   <ItemGroup>
@@ -37,15 +44,15 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Update="YT_DLP.hotkeys\HotKeys.Designer.cs">
+    <Compile Update="Hotkeys\HotKeys.Designer.cs">
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <AutoGen>True</AutoGen>
       <DependentUpon>HotKeys.settings</DependentUpon>
     </Compile>
-    <Compile Update="YT_DLP.player.controls\DLPButtonHotkey.cs">
+    <Compile Update="Controls\DLPButtonHotkey.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Update="YT_DLP.player.statusImages\res_StatusImages.Designer.cs">
+    <Compile Update="Statusdzejpegs\res_StatusImages.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>res_StatusImages.resx</DependentUpon>
@@ -56,7 +63,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="YT_DLP.player.statusImages\res_StatusImages.resx">
+    <EmbeddedResource Update="Statusdzejpegs\res_StatusImages.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>res_StatusImages.Designer.cs</LastGenOutput>
     </EmbeddedResource>
@@ -66,11 +73,11 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Update="YT_DLP.hotkeys\HotKeys.settings">
+    <None Update="Hotkeys\HotKeys.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>HotKeys.Designer.cs</LastGenOutput>
     </None>
-    <None Update="YT_DLP.player.statusImages\cannotplayvideo.PNG">
+    <None Update="Statusdzejpegs\cannotplayvideo.PNG">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
   </ItemGroup>

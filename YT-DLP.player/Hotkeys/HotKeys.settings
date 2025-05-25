@@ -1,5 +1,5 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="YT_DLP.player.YT_DLP.hotkeys" GeneratedClassName="HotKeys">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="YT_DLP.player.Hotkeys" GeneratedClassName="HotKeys">
   <Profiles />
   <Settings>
     <Setting Name="K1" Type="System.String" Scope="User">
@@ -137,7 +137,7 @@
     <Setting Name="PageDown" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="SpaceBar" Type="System.String" Scope="User">
+    <Setting Name="Space" Type="System.String" Scope="User">
       <Value Profile="(Default)">Play/pause player</Value>
     </Setting>
     <Setting Name="ArrowLeft" Type="System.String" Scope="User">

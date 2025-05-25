@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace YT_DLP.player.hotkeys {
+namespace YT_DLP.player.Hotkeys {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -566,12 +566,12 @@ namespace YT_DLP.player.hotkeys {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Play/pause player")]
-        public string SpaceBar {
+        public string Space {
             get {
-                return ((string)(this["SpaceBar"]));
+                return ((string)(this["Space"]));
             }
             set {
-                this["SpaceBar"] = value;
+                this["Space"] = value;
             }
         }
         

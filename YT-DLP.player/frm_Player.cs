@@ -11,13 +11,14 @@ using System.Text.RegularExpressions;
 using System.Runtime.CompilerServices;
 using System.IO;
 using System.Net.Http;
+using Windows.Media.Playback;
 
 namespace YT_DLP.player
 {
     public partial class Form1 : Form
     {
         private LibVLC _libVLC;
-        private MediaPlayer _mediaPlayer;
+        private LibVLCSharp.Shared.MediaPlayer _mediaPlayer;
 
         private static readonly string YTDLPMirrorLink = "https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp.exe";
         private static readonly string FFMPEGZipUrl = "https://www.gyan.dev/ffmpeg/builds/ffmpeg-release-essentials.zip";
@@ -33,7 +34,7 @@ namespace YT_DLP.player
 
             // Initialize non-nullable fields to avoid CS8618 warnings
             _libVLC = new LibVLC();
-            _mediaPlayer = new MediaPlayer(_libVLC);
+            _mediaPlayer = new LibVLCSharp.Shared.MediaPlayer(_libVLC);
             _emptyCursor = new Cursor("EmptyCursor.cur");
         }
         #region Settings
@@ -112,15 +113,24 @@ namespace YT_DLP.player
 
         private async void Form1_Load(object sender, EventArgs e)
         {
-            //bool isMetered = NetworkHelper.IsConnectedToMeteredNetwork();
-            //if (isMetered)
-            //{
-            //    ShowNotificationPanel("You are connected to a metered network. Downloads may incur additional charges.", false);
-            //}
-            KeyPreview = true;
+            bool isMetered = NetworkHelper.IsConnectedToMeteredNetwork();
+            if (isMetered)
+            {
+                ShowNotificationPanel("You are connected to a metered network. Downloads may incur additional charges.", false);
+            }
 
+            Windows.Media.Playback.MediaPlayer mediaPlaybackItem = new Windows.Media.Playback.MediaPlayer();
+
+            //MediaItemDisplayProperties props = mediaPlaybackItem.GetDisplayProperties();
+            //props.Type = Windows.Media.MediaPlaybackType.Video;
+            //props.VideoProperties.Title = "Video title";
+            //props.VideoProperties.Subtitle = "Video subtitle";
+            //props.VideoProperties.Genres.Add("Documentary");
+            //mediaPlaybackItem.ApplyDisplayProperties(props);
+
+            KeyPreview = true;
             _libVLC = new LibVLC();
-            _mediaPlayer = new MediaPlayer(_libVLC);
+            _mediaPlayer = new LibVLCSharp.Shared.MediaPlayer(_libVLC);
             videoView1.MediaPlayer = _mediaPlayer;
             _mediaPlayer.LengthChanged += MediaPlayer_LengthChanged;
             _mediaPlayer.Volume = VolumeTrackBar.Value;
@@ -1179,6 +1189,10 @@ namespace YT_DLP.player
                     URLTextBox.Focus();
                     URLTextBox.SelectAll();
                     return true;
+                case "Go to URL box, paste and play":
+                    URLTextBox.Text = Clipboard.GetText();
+                    FindVideoButton.PerformClick();
+                    return true;
                 case "Go back previous frame":
                     GoToPreviousFrame();
                     return true;
@@ -1269,6 +1283,11 @@ namespace YT_DLP.player
         private void dlpButton1_Click(object sender, EventArgs e)
         {
             NotificationPanel.Hide();
+        }
+
+        private void videoView1_Click(object sender, EventArgs e)
+        {
+            PlayPauseButton.PerformClick();
         }
     }
 }

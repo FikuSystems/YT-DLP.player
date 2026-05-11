@@ -14,9 +14,8 @@ namespace YT_DLP.player.controls
     {
         public DLPButtonHotkey()
         {
-            InitializeDarkTheme();
-            void InitializeDarkTheme()
-            {
+            
+     
                 this.FlatStyle = FlatStyle.Flat;
                 this.BackColor = Color.FromArgb(64, 64, 64);
                 this.FlatAppearance.BorderColor = Color.FromArgb(100, 100, 100);
@@ -26,7 +25,6 @@ namespace YT_DLP.player.controls
                 this.ForeColor = Color.White;
                 this.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
                 this.Size = new Size(60, 60);
-            }
 
         }
     }

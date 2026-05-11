@@ -1333,7 +1333,7 @@ namespace YT_DLP.player.Hotkeys
             ResetDefaultButton.TabIndex = 60;
             ResetDefaultButton.Text = "Reset to defaults";
             ResetDefaultButton.UseVisualStyleBackColor = false;
-            ResetDefaultButton.Click += this.ResetDefaultButton_Click;
+            ResetDefaultButton.Click += ResetDefaultButton_Click;
             // 
             // panel2
             // 
@@ -1608,8 +1608,8 @@ namespace YT_DLP.player.Hotkeys
             // 
             // frm_Hotkeys
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleDimensions = new SizeF(96F, 96F);
+            AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = Color.FromArgb(26, 26, 26);
             ClientSize = new Size(976, 631);
             Controls.Add(panel1);

@@ -204,6 +204,7 @@ namespace YT_DLP.player
             URLTextBox.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             URLTextBox.ForeColor = Color.White;
             URLTextBox.Location = new Point(2, 5);
+            URLTextBox.MinimumSize = new Size(366, 20);
             URLTextBox.Name = "URLTextBox";
             URLTextBox.Size = new Size(366, 20);
             URLTextBox.TabIndex = 0;
@@ -220,6 +221,7 @@ namespace YT_DLP.player
             videoView1.Size = new Size(1068, 332);
             videoView1.TabIndex = 0;
             videoView1.Text = "videoView1";
+            videoView1.Click += videoView1_Click;
             videoView1.MouseLeave += videoView1_MouseLeave;
             videoView1.MouseMove += videoView1_MouseMove;
             // 

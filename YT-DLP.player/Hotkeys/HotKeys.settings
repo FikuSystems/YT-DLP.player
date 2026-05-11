@@ -99,7 +99,7 @@
       <Value Profile="(Default)">Show/hide closed captions</Value>
     </Setting>
     <Setting Name="V" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">Go to URL box, paste and play</Value>
     </Setting>
     <Setting Name="B" Type="System.String" Scope="User">
       <Value Profile="(Default)" />

@@ -12,7 +12,7 @@ namespace YT_DLP.player.Hotkeys {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.13.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.14.0.0")]
     internal sealed partial class HotKeys : global::System.Configuration.ApplicationSettingsBase {
         
         private static HotKeys defaultInstance = ((HotKeys)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new HotKeys())));
@@ -409,7 +409,7 @@ namespace YT_DLP.player.Hotkeys {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Go to URL box, paste and play")]
         public string V {
             get {
                 return ((string)(this["V"]));
